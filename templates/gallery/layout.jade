@@ -3,8 +3,12 @@ html(lang="en")
 head
   meta(charset="UTF-8")
   title Gallery
-  link(href='templates/style.css', rel='stylesheet')
+  include
+  | <style type='text/css'>
+  include ./../style.css
+  | </style>
 body
   include ./header.jade
   div(class="flexbox")
     block content
+  include ./footer.jade
