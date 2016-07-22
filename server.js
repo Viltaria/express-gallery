@@ -20,11 +20,11 @@ app.get('/gallery/new', (req, res) => {
 
 });
 app.post('/gallery', (req, res) => {
-  User.create({
-    username: req.body.username
-  }).then( (user) => {
-    res.json(user);
-  });
+  // User.create({
+  //   username: req.body.username
+  // }).then( (user) => {
+  //   res.json(user);
+  // });
 });
 app.get('/gallery/:id/edit', (req, res) => {
 
