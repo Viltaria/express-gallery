@@ -1,7 +1,7 @@
-<!DOCTYPE html>
-html(lang="en")
-head
-  meta(charset="UTF-8")
-  title Gallery
-body
-  block content
+extends layout
+
+include mixins/listGallery
+
+block content
+  if(gallery.length)
+    mixin listGallery(gallery)

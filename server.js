@@ -1,9 +1,17 @@
 var bodyParser = require('body-parser'),
     express = require('express'),
-    app = express();
+    app = express(),
+    Sequelize = require('sequelize'),
+    sequelize = new Sequelize('sequelizedb', 'sequelizeowner', '123', {
+      host: 'localhost',
+      dialect: 'postgres'
+    });
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+
+app.set('view engine', 'jade');
+app.set('views', './templates');
 
 var PORTNUM = 3000;
 
@@ -11,7 +19,13 @@ var db = require('./models'),
     Gallery = db.Gallery;
 
 app.get('/', (req, res) => {
-
+  sequelize.query('SELECT * FROM "Galleries"', {type: sequelize.QueryTypes.SELECT})
+  .then ( (data) => {
+    res.render('gallery/index',{
+      gallery:data,
+    });
+    console.log(data);
+  });
 });
 app.get('/gallery/:id', (req, res) => {
 
