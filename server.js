@@ -13,7 +13,7 @@ var db = require('./models'),
 app.get('/', (req, res) => {
 
 });
-app.get('/gallery:id', (req, res) => {
+app.get('/gallery/:id', (req, res) => {
 
 });
 app.get('/gallery/new', (req, res) => {
