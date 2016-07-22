@@ -1,16 +1,17 @@
-var express = require('express');
-var app = express();
-var PORTNUM = 3000;
-var bodyParser = require('body-parser');
-
-var db = require('./models');
+var bodyParser = require('body-parser'),
+    express = require('express'),
+    app = express();
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
+var PORTNUM = 3000;
+
+var db = require('./models'),
+    Gallery = db.Gallery;
 
 app.get('/', (req, res) => {
-//root
+
 });
 app.get('/gallery:id', (req, res) => {
 
@@ -18,9 +19,12 @@ app.get('/gallery:id', (req, res) => {
 app.get('/gallery/new', (req, res) => {
 
 });
-
 app.post('/gallery', (req, res) => {
-
+  User.create({
+    username: req.body.username
+  }).then( (user) => {
+    res.json(user);
+  });
 });
 app.get('/gallery/:id/edit', (req, res) => {
 
