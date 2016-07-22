@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "sequalizeowner",
-    "password": 123,
-    "database": "sequalizedb",
+    "username": "sequelizeowner",
+    "password": "123",
+    "database": "sequelizedb",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },

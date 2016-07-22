@@ -10,9 +10,9 @@ module.exports = function(sequelize, DataTypes) {
   // });
   // return User;
   var Gallery = sequelize.define("Gallery", {
-    title: DataTypes.STRING,
-    user: DataTypes.STRING,
-    url: DataTypes.STRING
+    author: DataTypes.STRING,
+    link: DataTypes.STRING,
+    description: DataTypes.STRING
   });
   return Gallery;
 };

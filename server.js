@@ -25,6 +25,13 @@ app.post('/gallery', (req, res) => {
   // }).then( (user) => {
   //   res.json(user);
   // });
+  Gallery.create({
+    author: req.body.author,
+    link: req.body.link, //encodeURL?
+    description: req.body.description,
+  }).then ( (result) => {
+    res.json(result);
+  });
 });
 app.get('/gallery/:id/edit', (req, res) => {
 
@@ -38,5 +45,5 @@ app.delete('/gallery/:id', (req, res) => {
 
 app.listen(PORTNUM, function() {
   console.log('Now listening in on port ' + PORTNUM);
-  // db.sequelize.sync();
+  db.sequelize.sync();
 });
