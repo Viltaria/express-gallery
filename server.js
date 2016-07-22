@@ -108,6 +108,9 @@ app.delete('/gallery/:id', (req, res) => {
     //res.render Error page
   });
 });
+app.get('*', (req, res) => {
+  //res.render 404 page
+});
 
 app.listen(PORTNUM, function() {
   console.log('Now listening in on port ' + PORTNUM);
