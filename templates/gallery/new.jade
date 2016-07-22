@@ -1,1 +1,8 @@
 extends layout
+
+block content
+  form(action="/gallery" method="POST")
+    input(type="text" name="author" placeholder="Author")
+    input(type="text" name="link" placeholder="Link")
+    input(type="text" name="description" placeholder="Description")
+    input(type="submit" value="Submit")

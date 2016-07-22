@@ -1,3 +1,4 @@
 mixin listGallery(gallery)
     each picture in gallery
-      img(src=picture.link)
+      a(href=`/gallery/${picture.id}` title=picture.description)
+        img(src=picture.link)
