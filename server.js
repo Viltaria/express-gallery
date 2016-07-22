@@ -33,6 +33,8 @@ app.get(rootPaths, (req, res) => {
     res.render('gallery/index',{
       gallery:data,
     });
+  }).error ( () => {
+    //res.render error page
   });
 });
 app.get('/gallery/new', (req, res) => {
@@ -44,6 +46,8 @@ app.get('/gallery/:id', (req, res) => {
     res.render('gallery/index',{
       gallery:data,
     });
+  }).error ( () => {
+    //res render error page
   });
 });
 app.post('/gallery', (req, res) => {
@@ -53,19 +57,45 @@ app.post('/gallery', (req, res) => {
     description: req.body.description,
   }).then ( (result) => {
     res.json(result);
+  }).error ( () => {
+    //res render error page
   });
 });
 app.get('/gallery/:id/edit', (req, res) => {
   sequelize.query(`SELECT * FROM "Galleries" WHERE id = ${req.params.id}`, {type: sequelize.QueryTypes.SELECT})
   .then( (data) => {
-  res.render('gallery/edit', {
-    gallery:data,
-    id:req.params.id,
-  });
+    res.render('gallery/edit', {
+      gallery:data,
+      id:req.params.id,
+    });
+  }).error( () => {
+    //res render error page
   });
 });
 app.put('/gallery/:id', (req, res) => {
-
+  // for(var key in req.body) {
+  //   sequelize.query(`UPDATE "Galleries" SET ${key} = ${req.body[key]} WHERE id = ${req.params.id}`, {type: sequelize.QueryTypes.UPDATE});
+  // }
+  Gallery.update(
+    {
+      author: req.body.author,
+      link: req.body.link,
+      description: req.body.description
+    },
+    {
+      fields: ['author','link','description'],
+      where: {id: req.params.id}
+    }
+  ).then( () => {
+    sequelize.query(`SELECT * FROM "Galleries" WHERE id = ${req.params.id}`, {type: sequelize.QueryTypes.SELECT})
+    .then( (data) => {
+      res.render('gallery/index',{
+        gallery:data,
+      });
+    });
+  }).error( () => {
+    //res.render Error page
+  });
 });
 app.delete('/gallery/:id', (req, res) => {
   sequelize.query(`DELETE FROM "Galleries" WHERE id = ${req.params.id}`, {type: sequelize.QueryTypes.DELETE});
@@ -74,6 +104,8 @@ app.delete('/gallery/:id', (req, res) => {
     res.render('gallery/index',{
       gallery:data,
     });
+  }).error( () => {
+    //res.render Error page
   });
 });
 
