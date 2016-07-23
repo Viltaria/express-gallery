@@ -28,18 +28,18 @@ function verification (req, res, next) {
   if(req.method === 'POST') {
       fileType = body.link.slice(body.link.lastIndexOf('.'), body.link.length);
     if(!body.author || !body.link || !body.description) {
-      //return render error page
+      return res.render('gallery/error');
     } else if(supportedFileTypes.indexOf(fileType) < 0) {
-      // return render error page
+      return res.render('gallery/error');
     }
   } else if (req.method === 'PUT') {
       fileType = body.link.slice(body.link.lastIndexOf('.'), body.link.length);
       if(supportedFileTypes.indexOf(fileType) < 0) {
-        //return render error page
+        return res.render('gallery/error');
       }
       for(var key in body) {
         if(!body[key]) {
-          //return render error page
+          return res.render('gallery/error');
         }
       }
   }
@@ -59,20 +59,26 @@ app.get(rootPaths, verification, (req, res) => {
       gallery:data,
     });
   }).error ( () => {
-    //res.render error page
+    return res.render('gallery/error');
   });
 });
 app.get('/gallery/new', verification, (req, res) => {
-  res.render('gallery/new');
+  return res.render('gallery/new');
 });
 app.get('/gallery/:id', verification, (req, res) => {
+  if(isNaN(Number(req.params.id))) {
+    return res.render('gallery/404');
+  }
   sequelize.query(`SELECT * FROM "Galleries" WHERE id = ${req.params.id}`, {type: sequelize.QueryTypes.SELECT})
   .then( (data) => {
-    res.render('gallery/index',{
+    if(data.length === 0) {
+      return res.render('gallery/404');
+    }
+    return res.render('gallery/index',{
       gallery:data,
     });
   }).error ( () => {
-    //res render error page
+    return res.render('gallery/error');
   });
 });
 app.post('/gallery', verification, (req, res) => {
@@ -81,9 +87,15 @@ app.post('/gallery', verification, (req, res) => {
     link: req.body.link, //encodeURL?
     description: req.body.description,
   }).then ( (result) => {
-    res.json(result);
+    console.log(result.dataValues.id);
+    sequelize.query(`SELECT * FROM "Galleries" WHERE id = ${result.dataValues.id}`, {type: sequelize.QueryTypes.SELECT})
+    .then( (data) => {
+      return res.render('gallery/index', {
+        gallery:data,
+      });
+    });
   }).error ( () => {
-    //res render error page
+    return res.render('gallery/error');
   });
 });
 app.get('/gallery/:id/edit', verification, (req, res) => {
@@ -94,7 +106,7 @@ app.get('/gallery/:id/edit', verification, (req, res) => {
       id:req.params.id,
     });
   }).error( () => {
-    //res render error page
+    return res.render('gallery/error');
   });
 });
 app.put('/gallery/:id', verification, (req, res) => {
@@ -116,14 +128,14 @@ app.put('/gallery/:id', verification, (req, res) => {
       });
     });
   }).error( () => {
-    //res.render Error page
+    return res.render('gallery/error');
   });
 });
 app.delete('/gallery/:id', verification, (req, res) => {
   sequelize.query(`DELETE FROM "Galleries" WHERE id = ${req.params.id}`, {type: sequelize.QueryTypes.DELETE})
   .then( (data) => {
     if(data.rowCount === 0) {
-      //return render error page
+      return res.render('gallery/error');
     }
   });
   sequelize.query('SELECT * FROM "Galleries"', {type: sequelize.QueryTypes.SELECT})
@@ -132,11 +144,11 @@ app.delete('/gallery/:id', verification, (req, res) => {
       gallery:data,
     });
   }).error( () => {
-    //res.render Error page
+    return res.render('gallery/error');
   });
 });
 app.get('*', verification, (req, res) => {
-  //res.render 404 page
+  res.render('gallery/404.jade');
 });
 
 app.listen(PORTNUM, function() {

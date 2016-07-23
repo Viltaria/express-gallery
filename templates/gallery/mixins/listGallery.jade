@@ -1,4 +1,5 @@
 mixin listGallery(gallery)
-  each picture in gallery
-    a(href=`/gallery/${picture.id}` title=picture.description)
-      img(src=picture.link)
+  div(class = "flexbox")
+    each picture in gallery
+      a(href=`/gallery/${picture.id}` title=picture.description)
+        img(src=picture.link)
