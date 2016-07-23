@@ -1,8 +1,9 @@
 mixin listGallery(gallery)
     if gallery.length === 1
       div.flexboxE
-        a(href=gallery[0].link title=gallery[0].description)
-          img(src=gallery[0].link)
+        a(href=gallery[0].link
+          title=gallery[0].description)
+          img#singlePic(src=gallery[0].link)
       h1 #{gallery[0].author}
       h2 #{gallery[0].description}
     else
