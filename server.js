@@ -51,11 +51,34 @@ var PORTNUM = 3000;
 var db = require('./models'),
     Gallery = db.Gallery;
 
-var rootPaths = ['/', '/gallery', '/galler', '/galle', '/gall', '/gal', '/ga', '/g'];
+var rootPaths = ['/', '/gallery', '/gallery/page'];
 app.get(rootPaths, verification, (req, res) => {
-  sequelize.query('SELECT * FROM "Galleries"', {type: sequelize.QueryTypes.SELECT})
+  sequelize.query('SELECT * FROM "Galleries" ORDER BY id DESC LIMIT 20', {type: sequelize.QueryTypes.SELECT})
   .then ( (data) => {
-    res.render('gallery/index',{
+    return res.render('gallery/index',{
+      gallery:data,
+    });
+  }).error ( () => {
+    return res.render('gallery/error');
+  });
+});
+
+app.get('/gallery/page/:num', verification, (req, res) => {
+  var offset;
+  if(Number(req.params.num) !== 1) {
+    offset = (Number(req.params.num) * 20);
+  } else {
+    offset = 0;
+  }
+  if(isNaN(offset)) {
+    return res.render('gallery/error');
+  }
+  sequelize.query(`SELECT * FROM "Galleries" ORDER BY id DESC LIMIT 20 OFFSET ${offset}`, {type: sequelize.QueryTypes.SELECT})
+  .then ( (data) => {
+    if(data.length === 0) {
+      return res.render('gallery/404');
+    }
+    return res.render('gallery/index', {
       gallery:data,
     });
   }).error ( () => {
