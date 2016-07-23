@@ -66,7 +66,7 @@ app.get(rootPaths, verification, (req, res) => {
 app.get('/gallery/page/:num', verification, (req, res) => {
   var offset;
   if(Number(req.params.num) !== 1) {
-    offset = (Number(req.params.num) * 20);
+    offset = (Number(req.params.num) * 20) - 20;
   } else {
     offset = 0;
   }
