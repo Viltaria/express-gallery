@@ -9,6 +9,13 @@ h2 {
 .flexbox {
   display:flex;
   align-content:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.flexboxE {
+  display:flex;
+  align-content:center;
   justify-content:center;
   flex-wrap:wrap;
   align-items:center;
@@ -24,4 +31,46 @@ img {
   align-content:center;
   justify-content: space-around;
 }
+
+.next {
+    -webkit-transform: rotate(135deg);
+    margin: 50px 20px;
+    width: 50px;
+    height: 50px;
+    float: left;
+    cursor:pointer;
+}
+.prev {
+    -webkit-transform: rotate(315deg);
+    margin: 50px 20px;
+    width: 50px;
+    height: 50px;
+    float: left;
+    cursor:pointer;
+}
+.next:after {
+    content: '';
+    width: 50px;
+    height: 50px;
+    background: white;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+}
+.prev:after {
+    content: '';
+    width: 50px;
+    height: 50px;
+    background: white;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+}
+.nav:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.blue   { background: rgb(109, 158, 235); }
+
 

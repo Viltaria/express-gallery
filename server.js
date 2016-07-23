@@ -72,6 +72,8 @@ app.get('/gallery/page/:num', verification, (req, res) => {
   }
   if(isNaN(offset)) {
     return res.render('gallery/error');
+  } else if (offset < 0) {
+    offset = 0;
   }
   sequelize.query(`SELECT * FROM "Galleries" ORDER BY id DESC LIMIT 20 OFFSET ${offset}`, {type: sequelize.QueryTypes.SELECT})
   .then ( (data) => {
