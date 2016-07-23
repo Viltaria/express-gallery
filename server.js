@@ -23,7 +23,7 @@ app.set('views', './templates');
 
 function verification (req, res, next) {
   var body = req.body;
-  var supportedFileTypes = ['.tif','.jpg','.png','.jpeg'],
+  var supportedFileTypes = ['.tif','.jpg','.png','.jpeg', '.gif'],
       fileType;
   if(req.method === 'POST') {
       fileType = body.link.slice(body.link.lastIndexOf('.'), body.link.length);

@@ -1,5 +1,12 @@
 mixin listGallery(gallery)
-  div(class = "flexbox")
-    each picture in gallery
-      a(href=`/gallery/${picture.id}` title=picture.description)
-        img(src=picture.link)
+    if gallery.length === 1
+      div(class="flexbox")
+        a(href=`/gallery/${gallery[0].id}` title=gallery[0].description)
+          img(src=gallery[0].link)
+      h1 #{gallery[0].author}
+      h2 #{gallery[0].description}
+    else
+      div(class="flexbox")
+        each picture in gallery
+            a(href=`/gallery/${picture.id}` title=picture.description)
+              img(src=picture.link)

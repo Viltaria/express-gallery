@@ -1,10 +1,13 @@
 h1 {
   text-align:center;
 }
+h2 {
+  text-align:center;
+}
 .flexbox {
   display:flex;
   align-content:center;
-  justify-content:space-between;
+  justify-content:center;
   flex-wrap:wrap;
   align-items:center;
 }
