@@ -1,5 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway);
 @import url(https://fonts.googleapis.com/css?family=Oswald);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
 body {
   background-color:#222233;
   font-family:Oswald, Serif;
@@ -26,6 +28,11 @@ h2 {
   flex-wrap:wrap;
   align-items:center;
 }
+.description {
+  display:flex;
+  text-align:center;
+  width: 50%;
+}
 img {
   min-width:300px;
   max-width:300px;
@@ -44,12 +51,11 @@ img {
   justify-content: space-around;
 }
 fieldset p {
-  color:red;
+  color:silver;
 }
 fieldset legend {
-  color:red;
+  color:silver;
 }
-
 
 .next {
   -webkit-transform: rotate(135deg);
@@ -119,13 +125,64 @@ figure:hover+span {
   opacity: 1;
 }
 
-.hover01 figure img {
+.hover figure img {
   -webkit-transform: scale(1);
   transform: scale(1);
   -webkit-transition: .3s ease-in-out;
   transition: .3s ease-in-out;
 }
-.hover01 figure:hover img {
+.hover figure:hover img {
   -webkit-transform: scale(1.3);
   transform: scale(1.3);
+}
+
+.formStyle {
+ font-family: 'Open Sans', arial, sans;
+  width: 500px;
+  padding: 30px;
+  background: #222233;
+  margin: 50px auto;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+  -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+  -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
+}
+.formStyle input[type="text"],
+.formStyle textarea,
+{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    display: block;
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    background: transparent;
+    margin-bottom: 10px;
+    font: 16px Arial, Helvetica, sans-serif;
+    height: 45px;
+}
+.formStyle textarea{
+    resize:none;
+    overflow: hidden;
+}
+.formStyle input[type="submit"]{
+    -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+    box-shadow: inset 0px 1px 0px 0px #45D6D6;
+    background-color: #2CBBBB;
+    border: 1px solid #27A0A0;
+    display: inline-block;
+    cursor: pointer;
+    color: #FFFFFF;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 14px;
+    padding: 8px 18px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.formStyle input[type="submit"]:hover {
+    background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
+    background-color:#34CACA;
 }

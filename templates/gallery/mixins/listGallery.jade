@@ -5,9 +5,11 @@ mixin listGallery(gallery)
           title=gallery[0].description)
           img#singlePic(src=gallery[0].link)
       h1 #{gallery[0].author}
-      h2 #{gallery[0].description}
+      div.flexboxE
+        div.description
+          h2 #{gallery[0].description}
     else
-      div.flexbox.hover01
+      div.flexbox.hover
         each picture in gallery
           div
             figure

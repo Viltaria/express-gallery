@@ -4,7 +4,7 @@ block content
   if(gallery && id)
       each picture in gallery
         if picture.id === Number(id)
-          div.flexboxE
+          div.flexboxE.formStyle
             form(action="/gallery/#{Number(id)}" method="POST")
               fieldset
                 legend Edit Picture ##{picture.id}
@@ -16,3 +16,4 @@ block content
                 p Description:
                   input(type="text" name="description" value="#{picture.description}")
                 input(type="submit" value="EDIT")
+

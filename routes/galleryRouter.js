@@ -7,7 +7,9 @@ var express = require('express'),
       host: 'localhost',
       dialect: 'postgres',
     }),
-    verification = require('./verification');
+    verification = require('./verification'),
+    db = require('./../models'),
+    Gallery = db.Gallery;
 
 Router.use(bodyParser.urlencoded({extended:true}));
 Router.use(bodyParser.json());
@@ -19,7 +21,7 @@ Router.use(methodOverride(function(req, res){
   }
 }));
 
-var rootPaths = ['/', '/page'];
+var rootPaths = ['/', '/gallery', 'gallery/page'];
 Router.get(rootPaths, verification, (req, res) => {
   sequelize.query('SELECT * FROM "Galleries" ORDER BY id DESC LIMIT 20', {type: sequelize.QueryTypes.SELECT})
   .then ( (data) => {
@@ -31,7 +33,7 @@ Router.get(rootPaths, verification, (req, res) => {
   });
 });
 
-Router.get('/page/:num', verification, (req, res) => {
+Router.get('/gallery/page/:num', verification, (req, res) => {
   var offset;
   if(Number(req.params.num) !== 1) {
     offset = (Number(req.params.num) * 20) - 20;
@@ -55,10 +57,10 @@ Router.get('/page/:num', verification, (req, res) => {
     return res.render('gallery/error');
   });
 });
-Router.get('/new', verification, (req, res) => {
+Router.get('/gallery/new', verification, (req, res) => {
   return res.render('gallery/new');
 });
-Router.get('/:id', verification, (req, res) => {
+Router.get('/gallery/:id', verification, (req, res) => {
   if(isNaN(Number(req.params.id))) {
     return res.render('gallery/404');
   }
@@ -74,7 +76,7 @@ Router.get('/:id', verification, (req, res) => {
     return res.render('gallery/error');
   });
 });
-Router.post('', verification, (req, res) => {
+Router.post('/gallery', verification, (req, res) => {
   Gallery.create({
     author: req.body.author,
     link: req.body.link, //encodeURL?
@@ -91,7 +93,7 @@ Router.post('', verification, (req, res) => {
     return res.render('gallery/error');
   });
 });
-Router.get('/:id/edit', verification, (req, res) => {
+Router.get('/gallery/:id/edit', verification, (req, res) => {
   sequelize.query(`SELECT * FROM "Galleries" WHERE id = ${req.params.id}`, {type: sequelize.QueryTypes.SELECT})
   .then( (data) => {
     res.render('gallery/edit', {
@@ -102,7 +104,7 @@ Router.get('/:id/edit', verification, (req, res) => {
     return res.render('gallery/error');
   });
 });
-Router.put('/:id', verification, (req, res) => {
+Router.put('/gallery/:id', verification, (req, res) => {
   Gallery.update(
     {
       author: req.body.author,
@@ -124,7 +126,7 @@ Router.put('/:id', verification, (req, res) => {
     return res.render('gallery/error');
   });
 });
-Router.delete('/:id', verification, (req, res) => {
+Router.delete('/gallery/:id', verification, (req, res) => {
   sequelize.query(`DELETE FROM "Galleries" WHERE id = ${req.params.id}`, {type: sequelize.QueryTypes.DELETE})
   .then( (data) => {
     if(data.rowCount === 0) {
