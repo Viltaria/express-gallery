@@ -29,7 +29,6 @@ h2 {
   align-items:center;
 }
 .description {
-  display:flex;
   text-align:center;
   width: 50%;
 }
