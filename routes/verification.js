@@ -1,0 +1,24 @@
+module.exports = function verification (req, res, next) {
+  var body = req.body;
+  var supportedFileTypes = ['.tif','.jpg','.png','.jpeg', '.gif'],
+      fileType;
+  if(req.method === 'POST') {
+      fileType = body.link.slice(body.link.lastIndexOf('.'), body.link.length);
+    if(!body.author || !body.link || !body.description) {
+      return res.render('gallery/error');
+    } else if(supportedFileTypes.indexOf(fileType) < 0) {
+      return res.render('gallery/error');
+    }
+  } else if (req.method === 'PUT') {
+      fileType = body.link.slice(body.link.lastIndexOf('.'), body.link.length);
+      if(supportedFileTypes.indexOf(fileType) < 0) {
+        return res.render('gallery/error');
+      }
+      for(var key in body) {
+        if(!body[key]) {
+          return res.render('gallery/error');
+        }
+      }
+  }
+  next();
+};

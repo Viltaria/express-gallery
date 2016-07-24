@@ -4,14 +4,15 @@ block content
   if(gallery && id)
       each picture in gallery
         if picture.id === Number(id)
-          form(action="/gallery/#{Number(id)}" method="POST")
-            fieldset
-              legend Edit Picture ##{picture.id}
-              input(type="hidden" name="_method" value="PUT")
-              p Author:
-                input(type="text" name="author" value="#{picture.author}")
-              p Link:
-                input(type="text" name="link" value="#{picture.link}")
-              p Description:
-                input(type="text" name="description" value="#{picture.description}")
-              input(type="submit" value="EDIT")
+          div.flexboxE
+            form(action="/gallery/#{Number(id)}" method="POST")
+              fieldset
+                legend Edit Picture ##{picture.id}
+                input(type="hidden" name="_method" value="PUT")
+                p Author:
+                  input(type="text" name="author" value="#{picture.author}")
+                p Link:
+                  input(type="text" name="link" value="#{picture.link}")
+                p Description:
+                  input(type="text" name="description" value="#{picture.description}")
+                input(type="submit" value="EDIT")
