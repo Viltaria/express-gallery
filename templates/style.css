@@ -24,17 +24,17 @@ body {
   text-align:center;
   width:100%;
   float:right;
-  border-right: 0.5px dotted black;
-  font-size:3vw;
+  /*border-right: 0.5px dotted black;*/
+  font-size:4vw;
   color:grey;
   letter-spacing: 2px;
 }
-.second {
+/*.second {
   text-align:left;
   overflow: hidden;
   color:grey;
   font-size:1vw;
-}
+}*/
 .whitespace {
   opacity:0;
   width:100%;
@@ -74,10 +74,8 @@ body {
   text-decoration: none;
 }
 .threePics a>img {
-  min-height:100%;
-  max-height:100%;
-  min-width:90%;
-  max-width:90%;
+  height:100px;
+  width:100px;
 }
 .flexbox {
   display:flex;

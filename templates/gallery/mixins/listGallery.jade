@@ -25,6 +25,7 @@ mixin listGallery(gallery, pictures)
       div#centerPicContainer
         a(href=`/gallery/${gallery[0].id}`)
           img(src=gallery[0].link)
+          h1 #{gallery[0].author}
       div.threePics
         a(href=`/gallery/${gallery[1].id}`)
           img(src=gallery[1].link)
