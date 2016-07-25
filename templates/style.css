@@ -73,7 +73,7 @@ body {
   min-width:33%;
   text-decoration: none;
 }
-.threePics img {
+.threePics a>img {
   min-height:100%;
   max-height:100%;
   min-width:90%;
