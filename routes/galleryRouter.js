@@ -21,7 +21,7 @@ Router.use(methodOverride(function(req, res){
   }
 }));
 
-var rootPaths = ['/', '/gallery', 'gallery/page'];
+var rootPaths = ['/', '/gallery'];
 Router.get(rootPaths, verification, (req, res) => {
   sequelize.query('SELECT * FROM "Galleries" ORDER BY id DESC LIMIT 20', {type: sequelize.QueryTypes.SELECT})
   .then ( (data) => {
@@ -33,30 +33,6 @@ Router.get(rootPaths, verification, (req, res) => {
   });
 });
 
-Router.get('/gallery/page/:num', verification, (req, res) => {
-  var offset;
-  if(Number(req.params.num) !== 1) {
-    offset = (Number(req.params.num) * 20) - 20;
-  } else {
-    offset = 0;
-  }
-  if(isNaN(offset)) {
-    return res.render('gallery/error');
-  } else if (offset < 0) {
-    offset = 0;
-  }
-  sequelize.query(`SELECT * FROM "Galleries" ORDER BY id DESC LIMIT 20 OFFSET ${offset}`, {type: sequelize.QueryTypes.SELECT})
-  .then ( (data) => {
-    if(data.length === 0) {
-      return res.render('gallery/404');
-    }
-    return res.render('gallery/index', {
-      gallery:data,
-    });
-  }).error ( () => {
-    return res.render('gallery/error');
-  });
-});
 Router.get('/gallery/new', verification, (req, res) => {
   return res.render('gallery/new');
 });
