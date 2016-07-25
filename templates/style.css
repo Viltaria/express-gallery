@@ -38,7 +38,7 @@ img {
   min-height:300px;
   max-height:300px;
 }
-#singlePic {
+#singlePic a{
   min-width:100%;
   max-width:100%;
   min-height:100%;
