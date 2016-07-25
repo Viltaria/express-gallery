@@ -71,6 +71,7 @@ body {
   max-height:33%;
   min-width:33%;
   min-width:33%;
+  text-decoration: none;
 }
 .threePics img {
   min-height:100%;
