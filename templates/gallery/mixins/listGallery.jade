@@ -1,5 +1,6 @@
-mixin listGallery(gallery)
+mixin listGallery(gallery, pictures)
     if gallery.length === 1
+      div.whitespace
       div.flexboxE
         a(href=gallery[0].link
           title=gallery[0].description)
@@ -8,14 +9,30 @@ mixin listGallery(gallery)
       div.flexboxE
         div.description
           h2 #{gallery[0].description}
+      div.whitespace
+      div.threePics
+        a(href=`/gallery/${pictures[0].id}`)
+          img(src=pictures[0].link)
+        a(href=`/gallery/${pictures[1].id}`)
+          img(src=pictures[1].link)
+        a(href=`/gallery/${pictures[2].id}`)
+          img(src=pictures[2].link)
     else
-      div.flexbox.hover
-        each picture in gallery
-          div
-            figure
-              a(href=`/gallery/${picture.id}` title=picture.description)
-                img(src=picture.link)
-            span #{picture.author}
-      div.nav.flexboxE
-          div.prev#prev
-          div.next#next
+      div.whitespace
+      div#centerPicContainer
+        a(href=`/gallery/${gallery[0].id}`)
+          img(src=gallery[0].link)
+      div.threePics
+        a(href=`/gallery/${gallery[1].id}`)
+          img(src=gallery[1].link)
+        a(href=`/gallery/${gallery[2].id}`)
+          img(src=gallery[2].link)
+        a(href=`/gallery/${gallery[3].id}`)
+          img(src=gallery[3].link)
+      div.threePics
+        a(href=`/gallery/${gallery[4].id}`)
+          img(src=gallery[4].link)
+        a(href=`/gallery/${gallery[5].id}`)
+          img(src=gallery[5].link)
+        a(href=`/gallery/${gallery[6].id}`)
+          img(src=gallery[6].link)

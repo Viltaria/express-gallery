@@ -69,8 +69,14 @@ Router.get('/gallery/:id', verification, (req, res) => {
     if(data.length === 0) {
       return res.render('gallery/404');
     }
-    return res.render('gallery/index',{
-      gallery:data,
+    sequelize.query(`SELECT * FROM "Galleries" ORDER BY RANDOM() LIMIT 3`, {type: sequelize.QueryTypes.SELECT})
+    .then ( (chunk) => {
+      return res.render('gallery/index',{
+        gallery:data,
+        pictures:chunk,
+      });
+    }).error ( () => {
+      return res.render('gallery/error');
     });
   }).error ( () => {
     return res.render('gallery/error');
