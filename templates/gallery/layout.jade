@@ -3,12 +3,9 @@ html(lang="en")
 head
   meta(charset="UTF-8")
   title Gallery
-  | <style type='text/css'>
-  include ./../style.css
-  | </style>
 body
   div.container
     div.whitespace
-    include ./header.jade
+    include ./header/header.jade
     block content
-    include ./footer.jade
+    include ./footer/footer.jade

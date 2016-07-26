@@ -1,12 +1,12 @@
 mixin listGallery(gallery, pictures)
     if gallery.length === 1
       div.whitespace
-      div.flexboxE
+      div.flexbox
         a(href=gallery[0].link
           title=gallery[0].description)
-          img#singlePic(src=gallery[0].link)
+          img.border(src=gallery[0].link)
       h1 #{gallery[0].author}
-      div.flexboxE
+      div.flexbox
         div.description
           h2 #{gallery[0].description}
       div.whitespace
@@ -24,8 +24,9 @@ mixin listGallery(gallery, pictures)
       div.whitespace
       div#centerPicContainer
         a(href=`/gallery/${gallery[0].id}`)
-          img(src=gallery[0].link)
-          h1 #{gallery[0].author}
+          img.border(src=gallery[0].link)
+
+      h1 #{gallery[0].author}
       div.threePics
         a(href=`/gallery/${gallery[1].id}`)
           img(src=gallery[1].link)

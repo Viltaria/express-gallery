@@ -1,7 +1,7 @@
-extends layout
+extends ./../layout
 
 block content
-  div.formStyle.flexboxE
+  div.formStyle.flexbox
     form(action="/gallery" method="POST" id="form")
       fieldset
         legend New Picture
@@ -12,3 +12,7 @@ block content
         p Description:
           input(type="text" name="description")
         input(type="submit" value="Submit")
+
+  | <style type='text/css'>
+  include ./style.css
+  | </style>
