@@ -7,7 +7,6 @@ var Sequelize = require('sequelize'),
       host: 'localhost',
       dialect: 'postgres',
     });
-
 var db = require('./../../../models'),
     User = db.User,
     Gallery = db.Gallery;
@@ -15,7 +14,7 @@ var config = require('./../../../config/config');
 
 Router.get('/logout', (req, res) => {
   req.logout();
-  res.redirect('/');
+  return res.redirect('/');
 });
 Router.get('/register', (req, res) => {
   return res.render('register/register');
@@ -27,7 +26,8 @@ Router.post('/register', (req, res) => {
     username: req.body.username,
     password: req.body.password,
     email: req.body.email,
-  }).then ( (result) => {
+  })
+  .then ( (result) => {
     Gallery.findAll({
     limit: 20,
     order: 'ID DESC'
@@ -47,14 +47,5 @@ Router.post('/register', (req, res) => {
 Router.get('/login', (req, res) => {
   return res.render('login/login');
 });
-// Router.post('/login', (req, res) => {
-//    passport.authenticate('local', {
-//     successRedirect: '/gallery',
-//     failureRedirect: '/login',
-//   });
-// });
-// Router.get('/test', isAuth, (req, res) => {
-//   res.render('error/error');
-// });
 
 module.exports = Router;

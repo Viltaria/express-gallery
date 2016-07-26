@@ -12,7 +12,6 @@ var verification = require('./verification');
 var db = require('./../../../models'),
     Gallery = db.Gallery,
     User = db.User;
-
 var config = require('./../../../config/config');
 
 var isAuth = (req, res, next) => {
@@ -31,19 +30,24 @@ Router.get('/:id', verification, (req, res) => {
   }
   Gallery.findById(req.params.id)
   .then( (data) => {
-    var arr = [data.dataValues];
-    if(arr.length === 0) {
+    if(!data) {
       return res.render('notFound/404');
     }
+    var arr = [data.dataValues];
     Gallery.findAll({
       limit: 3,
       order: 'RANDOM()'
     })
     .then ( (chunk) => {
       var array = [chunk[0].dataValues, chunk[1].dataValues, chunk[2].dataValues]; //change this make it fluid
-      return res.render('index/index',{
+      var user = false;
+      if(req.user) {
+        user = req.user.username;
+      }
+      return res.render('index/index', {
         gallery:arr,
         pictures:array,
+        user: user,
       });
     }).error ( () => {
       return res.render('error/error');
@@ -57,15 +61,34 @@ Router.post('/', isAuth, verification, (req, res) => {
     author: req.body.author,
     link: req.body.link,
     description: req.body.description,
-  }).then ( (result) => {
+    poster: req.user.username,
+  })
+  .then ( (result) => {
     Gallery.findById(result.dataValues.id)
     .then( (data) => {
       var arr = [data];
-      return res.render('index/index', {
-        gallery:arr,
+      Gallery.findAll({
+      limit: 3,
+      order: 'RANDOM()'
+    })
+      .then ( (result) => {
+        var array = [result[0].dataValues, result[1].dataValues, result[2].dataValues]; //make this fluid
+        var user = false;
+        if(req.user) {
+          user = req.user.username;
+        }
+        return res.render('index/index', {
+          gallery:arr,
+          pictures:array,
+          user: user,
+        });
+      })
+      .error( () => {
+        return res.render('error/error');
       });
     });
-  }).error ( () => {
+  })
+  .error ( () => {
     return res.render('error/error');
   });
 });
@@ -73,11 +96,12 @@ Router.get('/:id/edit', isAuth, verification, (req, res) => {
   Gallery.findById(req.params.id)
   .then( (data) => {
     var arr = [data];
-    res.render('edit/edit', {
+    return res.render('edit/edit', {
       gallery:arr,
       id:req.params.id,
     });
-  }).error( () => {
+  })
+  .error( () => {
     return res.render('error/error');
   });
 });
@@ -90,17 +114,37 @@ Router.put('/:id', isAuth, verification, (req, res) => {
     },
     {
       fields: ['author','link','description'],
-      where: {id: req.params.id}
+      where: {
+        id: req.params.id
+      }
     }
   ).then( () => {
     Gallery.findById(req.params.id)
     .then( (data) => {
       var arr  = [data];
-      res.render('index/index',{
-        gallery:arr,
+      Gallery.findAll({
+      limit: 3,
+      order: 'RANDOM()'
+      })
+      .then ( (result) => {
+        var array = [result[0].dataValues, result[1].dataValues, result[2].dataValues]; //make this fluid
+        if(req.user) {
+          user = req.user.username;
+        } else {
+          user = false;
+        }
+        return res.render('index/index', {
+          gallery:arr,
+          pictures:array,
+          user: user,
+        });
+      })
+      .error ( () => {
+        return res.render('error/error');
       });
     });
-  }).error( () => {
+  })
+  .error( () => {
     return res.render('error/error');
   });
 });
@@ -110,7 +154,7 @@ Router.delete('/:id', isAuth, verification, (req, res) => {
       id: req.params.id,
     }
   })
-  .then( (data) => { //how to delete in sequelize?
+  .then( (data) => {
     if(data.rowCount === 0) {
       return res.render('error/error');
     }
@@ -120,10 +164,11 @@ Router.delete('/:id', isAuth, verification, (req, res) => {
     order: 'ID DESC',
   })
   .then ( (data) => {
-    res.render('index/index',{
+    return res.render('index/index',{
       gallery:data,
     });
-  }).error( () => {
+  })
+  .error( () => {
     return res.render('error/error');
   });
 });
@@ -136,12 +181,13 @@ Router.get('/', (req, res) => {
     return res.render('index/index',{
       gallery:data,
     });
-  }).error ( () => {
+  })
+  .error ( () => {
     return res.render('error/error');
   });
 });
 Router.get('*', (req, res) => {
-  res.render('notFound/404');
+  return res.render('notFound/404');
 });
 
 module.exports = Router;

@@ -32,23 +32,20 @@ app.use(methodOverride((req, res) => {
     return method;
   }
 }));
-
 app.use(session({
   secret:config.SECRET,
   saveUninitialized:true,
 }));
 app.use(passport.initialize());
-
 app.use(passport.session());
 passport.use(new LocalStrategy((username, password, done) => {
   User.findOne({
     where: {username : username},
   })
   .then( (result) => {
-    if(result.dataValues.password === password) {
-      return done(null, true);
+    if(password === result.dataValues.password || null) {
+      return done(null, result.dataValues);
     } else {
-      res.render('error/error');
       return done(null, false); // on failed login
     }
   }).error ( () => {
@@ -68,7 +65,7 @@ app.use('/user', userRouter);
 
 app.post('/login', passport.authenticate('local',{
   successRedirect: '/',
-  failureRedirect: '/error/',
+  failureRedirect: '/user/login',
 }));
 
 app.get('/', (req, res) => {
@@ -80,7 +77,8 @@ app.get('/', (req, res) => {
     return res.render('index/index',{
       gallery:data,
     });
-  }).error ( () => {
+  })
+  .error ( () => {
     return res.render('error/error');
   });
 });

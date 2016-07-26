@@ -1,4 +1,4 @@
-mixin listGallery(gallery, pictures)
+mixin listGallery(gallery, pictures, user)
     if gallery.length === 1
       div.whitespace
       div.flexbox
@@ -9,8 +9,11 @@ mixin listGallery(gallery, pictures)
       div.flexbox
         div.description
           h2 #{gallery[0].description}
+      if user === gallery[0].poster
+        a(href="/gallery/#{gallery[0].id}/edit")
+          p Edit this picture
       div.whitespace
-      div.threePics
+      div(style="border-bottom:0.5px dotted black").threePics
         a(href=`/gallery/${pictures[0].id}`)
           img(src=pictures[0].link)
           p #{pictures[0].author}
@@ -20,12 +23,14 @@ mixin listGallery(gallery, pictures)
         a(href=`/gallery/${pictures[2].id}`)
           img(src=pictures[2].link)
           p #{pictures[2].author}
+      if !user
+        p Like the site?
+          a(href="/user/register/") Register!
     else
       div.whitespace
       div#centerPicContainer
         a(href=`/gallery/${gallery[0].id}`)
           img.border(src=gallery[0].link)
-
       h1 #{gallery[0].author}
       div.threePics
         a(href=`/gallery/${gallery[1].id}`)
@@ -37,7 +42,7 @@ mixin listGallery(gallery, pictures)
         a(href=`/gallery/${gallery[3].id}`)
           img(src=gallery[3].link)
           p #{gallery[3].author}
-      div.threePics
+      div(style="border-bottom:0.5px dotted black").threePics
         a(href=`/gallery/${gallery[4].id}`)
           img(src=gallery[4].link)
           p #{gallery[4].author}
