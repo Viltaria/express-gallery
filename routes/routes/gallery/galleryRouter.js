@@ -1,6 +1,7 @@
 var express = require('express'),
     Router = express.Router();
-var bodyParser = require('body-parser');
+var bodyParser = require('body-parser'),
+    cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
 var Sequelize = require('sequelize'),
     sequelize = new Sequelize('sequelizedb', 'sequelizeowner', '123', {
@@ -9,30 +10,19 @@ var Sequelize = require('sequelize'),
     });
 var verification = require('./verification');
 var db = require('./../../../models'),
-    Gallery = db.Gallery;
+    Gallery = db.Gallery,
+    User = db.User;
 
-Router.use(bodyParser.urlencoded({extended:true}));
-Router.use(bodyParser.json());
-Router.use(methodOverride(function(req, res){
-  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-    var method = req.body._method;
-    delete req.body._method;
-    return method;
+var config = require('./../../../config/config');
+
+var isAuth = (req, res, next) => {
+  if(!req.isAuthenticated()) {
+    return res.redirect('/user/register');
   }
-}));
+  return next();
+};
 
-Router.get('/', verification, (req, res) => {
-  sequelize.query('SELECT * FROM "Galleries" ORDER BY RANDOM() LIMIT 7', {type: sequelize.QueryTypes.SELECT})
-  .then ( (data) => {
-    return res.render('index/index',{
-      gallery:data,
-    });
-  }).error ( () => {
-    return res.render('error/error');
-  });
-});
-
-Router.get('/new', verification, (req, res) => {
+Router.get('/new', isAuth, verification, (req, res) => {
   return res.render('new/new');
 });
 Router.get('/:id', verification, (req, res) => {
@@ -57,7 +47,7 @@ Router.get('/:id', verification, (req, res) => {
     return res.render('error/error');
   });
 });
-Router.post('/', verification, (req, res) => {
+Router.post('/', isAuth, verification, (req, res) => {
   Gallery.create({
     author: req.body.author,
     link: req.body.link,
@@ -84,7 +74,7 @@ Router.get('/:id/edit', verification, (req, res) => {
     return res.render('error/error');
   });
 });
-Router.put('/:id', verification, (req, res) => {
+Router.put('/:id', isAuth, verification, (req, res) => {
   Gallery.update(
     {
       author: req.body.author,
@@ -106,7 +96,7 @@ Router.put('/:id', verification, (req, res) => {
     return res.render('error/error');
   });
 });
-Router.delete('/:id', verification, (req, res) => {
+Router.delete('/:id', isAuth, verification, (req, res) => {
   sequelize.query(`DELETE FROM "Galleries" WHERE id = ${req.params.id}`, {type: sequelize.QueryTypes.DELETE})
   .then( (data) => {
     if(data.rowCount === 0) {
@@ -122,7 +112,7 @@ Router.delete('/:id', verification, (req, res) => {
     return res.render('error/error');
   });
 });
-Router.get('*', verification, (req, res) => {
+Router.get('*', (req, res) => {
   res.render('notFound/404');
 });
 

@@ -1,0 +1,14 @@
+extends ./../layout
+
+block content
+  h1 Login
+  div.flexbox.formStyle
+    form(method="POST" action="/login")
+      p Username:
+        input(type="text" name="username")
+      p Password:
+        input(type="password" name="password")
+      button(type="submit") Login
+  | <style type='text/css'>
+  include ./style.css
+  | </style>
