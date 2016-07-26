@@ -22,7 +22,7 @@ Router.use(methodOverride(function(req, res){
 }));
 
 Router.get('/', verification, (req, res) => {
-  sequelize.query('SELECT * FROM "Galleries" ORDER BY id DESC LIMIT 20', {type: sequelize.QueryTypes.SELECT})
+  sequelize.query('SELECT * FROM "Galleries" ORDER BY RANDOM() LIMIT 7', {type: sequelize.QueryTypes.SELECT})
   .then ( (data) => {
     return res.render('gallery/index/index',{
       gallery:data,
@@ -60,7 +60,7 @@ Router.get('/:id', verification, (req, res) => {
 Router.post('', verification, (req, res) => {
   Gallery.create({
     author: req.body.author,
-    link: req.body.link, //encodeURL?
+    link: req.body.link,
     description: req.body.description,
   }).then ( (result) => {
     console.log(result.dataValues.id);
