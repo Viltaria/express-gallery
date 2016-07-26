@@ -8,7 +8,8 @@ var config = require('./config/config');
 var galleryRouter = require('./routes/routes/gallery/galleryRouter'),
     userRouter = require('./routes/routes/users/userRouter');
 var db = require('./models'),
-    User = db.User;
+    User = db.User,
+    Gallery = db.Gallery;
 var Sequelize = require('sequelize'),
     sequelize = new Sequelize('sequelizedb', 'sequelizeowner', '123', {
       host: 'localhost',
@@ -71,7 +72,10 @@ app.post('/login', passport.authenticate('local',{
 }));
 
 app.get('/', (req, res) => {
-  sequelize.query('SELECT * FROM "Galleries" ORDER BY id DESC LIMIT 20', {type: sequelize.QueryTypes.SELECT})
+  Gallery.findAll({
+    limit: 20,
+    order: 'ID DESC'
+  })
   .then ( (data) => {
     return res.render('index/index',{
       gallery:data,

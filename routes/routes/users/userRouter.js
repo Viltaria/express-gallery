@@ -9,9 +9,9 @@ var Sequelize = require('sequelize'),
     });
 
 var db = require('./../../../models'),
-    User = db.User;
+    User = db.User,
+    Gallery = db.Gallery;
 var config = require('./../../../config/config');
-
 
 Router.get('/logout', (req, res) => {
   req.logout();
@@ -28,7 +28,10 @@ Router.post('/register', (req, res) => {
     password: req.body.password,
     email: req.body.email,
   }).then ( (result) => {
-    sequelize.query('SELECT * FROM "Galleries" ORDER BY ID DESC LIMIT 20', {type: sequelize.QueryTypes.SELECT})
+    Gallery.findAll({
+    limit: 20,
+    order: 'ID DESC'
+    })
     .then( (data) => {
       return res.render('index/index',//render user page?
       {
