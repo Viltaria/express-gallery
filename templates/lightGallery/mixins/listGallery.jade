@@ -1,0 +1,49 @@
+mixin listGallery(gallery, pictures)
+    if gallery.length === 1
+      div.whitespace
+      div.flexbox
+        a(href=gallery[0].link
+          title=gallery[0].description)
+          img.border(src=gallery[0].link)
+      h1 #{gallery[0].author}
+      div.flexbox
+        div.description
+          h2 #{gallery[0].description}
+      div.whitespace
+      div.threePics
+        a(href=`/gallery/${pictures[0].id}`)
+          img(src=pictures[0].link)
+          p #{pictures[0].author}
+        a(href=`/gallery/${pictures[1].id}`)
+          img(src=pictures[1].link)
+          p #{pictures[1].author}
+        a(href=`/gallery/${pictures[2].id}`)
+          img(src=pictures[2].link)
+          p #{pictures[2].author}
+    else
+      div.whitespace
+      div#centerPicContainer
+        a(href=`/gallery/${gallery[0].id}`)
+          img.border(src=gallery[0].link)
+
+      h1 #{gallery[0].author}
+      div.threePics
+        a(href=`/gallery/${gallery[1].id}`)
+          img(src=gallery[1].link)
+          p #{gallery[1].author}
+        a(href=`/gallery/${gallery[2].id}`)
+          img(src=gallery[2].link)
+          p #{gallery[2].author}
+        a(href=`/gallery/${gallery[3].id}`)
+          img(src=gallery[3].link)
+          p #{gallery[3].author}
+      div.threePics
+        a(href=`/gallery/${gallery[4].id}`)
+          img(src=gallery[4].link)
+          p #{gallery[4].author}
+        a(href=`/gallery/${gallery[5].id}`)
+          img(src=gallery[5].link)
+          p #{gallery[5].author}
+        a(href=`/gallery/${gallery[6].id}`)
+          img(src=gallery[6].link)
+          p #{gallery[6].author}
