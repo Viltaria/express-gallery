@@ -7,9 +7,8 @@ var Sequelize = require('sequelize'),
       host: 'localhost',
       dialect: 'postgres',
     });
-    // verification = require('./verification')
-    // db = require('./../models'),
-    // Gallery = db.Gallery;
+var db = require('./../../../models'),
+    Gallery = db.Gallery;
     //
 // Router.get('/register', (req, res) => {
 

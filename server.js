@@ -1,8 +1,9 @@
 var bodyParser = require('body-parser');
 var express = require('express'),
     app = express();
-var galleryRouter = require('./routes/lightRoutes/galleryRouter'),
-    userRouter = require('./routes/lightRoutes/userRouter');
+// light|| dark
+var galleryRouter = require('./routes/lightRoutes/gallery/galleryRouter'),
+    userRouter = require('./routes/lightRoutes/users/userRouter');
 var db = require('./models');
 var Sequelize = require('sequelize'),
     sequelize = new Sequelize('sequelizedb', 'sequelizeowner', '123', {
@@ -14,7 +15,7 @@ app.set('view engine', 'jade');
 app.set('views', './templates/lightGallery');
 
 app.use('/gallery', galleryRouter);
-// app.use('/user', userRouter);
+app.use('/user', userRouter);
 
 
 app.get('/', (req, res) => {

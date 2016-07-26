@@ -1,0 +1,22 @@
+/* All the things for a new template */
+
+@import url(https://fonts.googleapis.com/css?family=Oswald);
+body {
+  background-color:#222233;
+  font-family:Oswald, Serif;
+}
+h1 {
+  text-align:center;
+  color: #B2FFFF;
+}
+img {
+  min-width:300px;
+  max-width:300px;
+  min-height:300px;
+  max-height:300px;
+}
+#footer {
+  display:flex;
+  align-content:center;
+  justify-content: space-around;
+}

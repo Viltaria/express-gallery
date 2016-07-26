@@ -1,14 +1,14 @@
 var express = require('express'),
-    Router = express.Router();
-var bodyParser = require('body-parser');
-var methodOverride = require('method-override');
-var Sequelize = require('sequelize'),
+    Router = express.Router(),
+    bodyParser = require('body-parser'),
+    methodOverride = require('method-override');
+    Sequelize = require('sequelize'),
     sequelize = new Sequelize('sequelizedb', 'sequelizeowner', '123', {
       host: 'localhost',
       dialect: 'postgres',
-    });
-var verification = require('./verification');
-var db = require('./../../models'),
+    }),
+    verification = require('./verification'),
+    db = require('./../../../models'),
     Gallery = db.Gallery;
 
 Router.use(bodyParser.urlencoded({extended:true}));
@@ -21,8 +21,9 @@ Router.use(methodOverride(function(req, res){
   }
 }));
 
-Router.get('/', verification, (req, res) => {
-  sequelize.query('SELECT * FROM "Galleries" ORDER BY RANDOM() LIMIT 7', {type: sequelize.QueryTypes.SELECT})
+var rootPaths = ['/', '/page'];
+Router.get(rootPaths, verification, (req, res) => {
+  sequelize.query('SELECT * FROM "Galleries" ORDER BY id DESC LIMIT 20', {type: sequelize.QueryTypes.SELECT})
   .then ( (data) => {
     return res.render('index/index',{
       gallery:data,
@@ -32,6 +33,30 @@ Router.get('/', verification, (req, res) => {
   });
 });
 
+Router.get('/page/:num', verification, (req, res) => {
+  var offset;
+  if(Number(req.params.num) !== 1) {
+    offset = (Number(req.params.num) * 20) - 20;
+  } else {
+    offset = 0;
+  }
+  if(isNaN(offset)) {
+    return res.render('error/error');
+  } else if (offset < 0) {
+    offset = 0;
+  }
+  sequelize.query(`SELECT * FROM "Galleries" ORDER BY id DESC LIMIT 20 OFFSET ${offset}`, {type: sequelize.QueryTypes.SELECT})
+  .then ( (data) => {
+    if(data.length === 0) {
+      return res.render('notFound/404');
+    }
+    return res.render('index/index', {
+      gallery:data,
+    });
+  }).error ( () => {
+    return res.render('error/error');
+  });
+});
 Router.get('/new', verification, (req, res) => {
   return res.render('new/new');
 });
@@ -44,23 +69,17 @@ Router.get('/:id', verification, (req, res) => {
     if(data.length === 0) {
       return res.render('notFound/404');
     }
-    sequelize.query(`SELECT * FROM "Galleries" ORDER BY RANDOM() LIMIT 3`, {type: sequelize.QueryTypes.SELECT})
-    .then ( (chunk) => {
-      return res.render('index/index',{
-        gallery:data,
-        pictures:chunk,
-      });
-    }).error ( () => {
-      return res.render('error/error');
+    return res.render('index/index',{
+      gallery:data,
     });
   }).error ( () => {
     return res.render('error/error');
   });
 });
-Router.post('', verification, (req, res) => {
+Router.post('/', verification, (req, res) => {
   Gallery.create({
     author: req.body.author,
-    link: req.body.link,
+    link: req.body.link, //encodeURL?
     description: req.body.description,
   }).then ( (result) => {
     console.log(result.dataValues.id);
