@@ -21,19 +21,19 @@ Router.use(methodOverride(function(req, res){
   }
 }));
 
-var rootPaths = ['/', '/gallery', 'gallery/page'];
+var rootPaths = ['/', '/page'];
 Router.get(rootPaths, verification, (req, res) => {
   sequelize.query('SELECT * FROM "Galleries" ORDER BY id DESC LIMIT 20', {type: sequelize.QueryTypes.SELECT})
   .then ( (data) => {
-    return res.render('gallery/index',{
+    return res.render('gallery/index/index',{
       gallery:data,
     });
   }).error ( () => {
-    return res.render('gallery/error');
+    return res.render('gallery/error/error');
   });
 });
 
-Router.get('/gallery/page/:num', verification, (req, res) => {
+Router.get('/page/:num', verification, (req, res) => {
   var offset;
   if(Number(req.params.num) !== 1) {
     offset = (Number(req.params.num) * 20) - 20;
@@ -41,42 +41,42 @@ Router.get('/gallery/page/:num', verification, (req, res) => {
     offset = 0;
   }
   if(isNaN(offset)) {
-    return res.render('gallery/error');
+    return res.render('gallery/error/error');
   } else if (offset < 0) {
     offset = 0;
   }
   sequelize.query(`SELECT * FROM "Galleries" ORDER BY id DESC LIMIT 20 OFFSET ${offset}`, {type: sequelize.QueryTypes.SELECT})
   .then ( (data) => {
     if(data.length === 0) {
-      return res.render('gallery/404');
+      return res.render('gallery/notFound/404');
     }
-    return res.render('gallery/index', {
+    return res.render('gallery/index/index', {
       gallery:data,
     });
   }).error ( () => {
-    return res.render('gallery/error');
+    return res.render('gallery/error/error');
   });
 });
-Router.get('/gallery/new', verification, (req, res) => {
-  return res.render('gallery/new');
+Router.get('/new', verification, (req, res) => {
+  return res.render('gallery/new/new');
 });
-Router.get('/gallery/:id', verification, (req, res) => {
+Router.get('/:id', verification, (req, res) => {
   if(isNaN(Number(req.params.id))) {
-    return res.render('gallery/404');
+    return res.render('gallery/notFound/404');
   }
   sequelize.query(`SELECT * FROM "Galleries" WHERE id = ${req.params.id}`, {type: sequelize.QueryTypes.SELECT})
   .then( (data) => {
     if(data.length === 0) {
-      return res.render('gallery/404');
+      return res.render('gallery/notFound/404');
     }
-    return res.render('gallery/index',{
+    return res.render('gallery/index/index',{
       gallery:data,
     });
   }).error ( () => {
-    return res.render('gallery/error');
+    return res.render('gallery/error/error');
   });
 });
-Router.post('/gallery', verification, (req, res) => {
+Router.post('/', verification, (req, res) => {
   Gallery.create({
     author: req.body.author,
     link: req.body.link, //encodeURL?
@@ -85,26 +85,26 @@ Router.post('/gallery', verification, (req, res) => {
     console.log(result.dataValues.id);
     sequelize.query(`SELECT * FROM "Galleries" WHERE id = ${result.dataValues.id}`, {type: sequelize.QueryTypes.SELECT})
     .then( (data) => {
-      return res.render('gallery/index', {
+      return res.render('gallery/index/index', {
         gallery:data,
       });
     });
   }).error ( () => {
-    return res.render('gallery/error');
+    return res.render('gallery/error/error');
   });
 });
-Router.get('/gallery/:id/edit', verification, (req, res) => {
+Router.get('/:id/edit', verification, (req, res) => {
   sequelize.query(`SELECT * FROM "Galleries" WHERE id = ${req.params.id}`, {type: sequelize.QueryTypes.SELECT})
   .then( (data) => {
-    res.render('gallery/edit', {
+    res.render('gallery/edit/edit', {
       gallery:data,
       id:req.params.id,
     });
   }).error( () => {
-    return res.render('gallery/error');
+    return res.render('gallery/error/error');
   });
 });
-Router.put('/gallery/:id', verification, (req, res) => {
+Router.put('/:id', verification, (req, res) => {
   Gallery.update(
     {
       author: req.body.author,
@@ -118,32 +118,32 @@ Router.put('/gallery/:id', verification, (req, res) => {
   ).then( () => {
     sequelize.query(`SELECT * FROM "Galleries" WHERE id = ${req.params.id}`, {type: sequelize.QueryTypes.SELECT})
     .then( (data) => {
-      res.render('gallery/index',{
+      res.render('gallery/index/index',{
         gallery:data,
       });
     });
   }).error( () => {
-    return res.render('gallery/error');
+    return res.render('gallery/error/error');
   });
 });
-Router.delete('/gallery/:id', verification, (req, res) => {
+Router.delete('/:id', verification, (req, res) => {
   sequelize.query(`DELETE FROM "Galleries" WHERE id = ${req.params.id}`, {type: sequelize.QueryTypes.DELETE})
   .then( (data) => {
     if(data.rowCount === 0) {
-      return res.render('gallery/error');
+      return res.render('gallery/error/error');
     }
   });
   sequelize.query('SELECT * FROM "Galleries"', {type: sequelize.QueryTypes.SELECT})
   .then ( (data) => {
-    res.render('gallery/index',{
+    res.render('gallery/index/index',{
       gallery:data,
     });
   }).error( () => {
-    return res.render('gallery/error');
+    return res.render('gallery/error/error');
   });
 });
 Router.get('*', verification, (req, res) => {
-  res.render('gallery/404.jade');
+  res.render('gallery/notFound/404');
 });
 
 module.exports = Router;

@@ -1,4 +1,4 @@
-extends layout
+extends ./../layout
 
 block content
   div.flexboxE.formStyle
@@ -12,3 +12,7 @@ block content
         p Description:
          textarea(rows="4" cols="50" name="description" form="form")
         input(type="submit" value="Submit")
+
+  | <style type='text/css'>
+  include ./style.css
+  | </style>

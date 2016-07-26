@@ -1,0 +1,13 @@
+extends ./../layout
+
+include ./../mixins/listGallery
+
+block content
+  if(gallery.length)
+    mixin listGallery(gallery)
+  | <script type="text/javascript">
+  include ./../mixins/hack.js
+  | </script>
+  | <style type='text/css'>
+  include ./style.css
+  | </style>

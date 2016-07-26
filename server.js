@@ -6,8 +6,15 @@ var bodyParser = require('body-parser'),
 app.set('view engine', 'jade');
 app.set('views', './templates');
 
-var galleryPaths = ['/', '/gallery'];
-app.use(galleryPaths, galleryRouter);
+app.use('/gallery', galleryRouter);
+
+app.get('/', (req, res) => {
+  res.render('gallery/index/index');
+});
+
+app.get('*', (req, res) => {
+  res.render('gallery/notFound/404');
+});
 
 
 var PORTNUM = 3000;

@@ -3,13 +3,7 @@ html(lang="en")
 head
   meta(charset="UTF-8")
   title Gallery
-  | <style type='text/css'>
-  include ./../style.css
-  | </style>
 body
-  include ./header.jade
+  include ./header/header.jade
   block content
-  include ./footer.jade
-  | <script type="text/javascript">
-  include ./mixins/hack.js
-  | </script>
+  include ./footer/footer.jade
