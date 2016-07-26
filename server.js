@@ -2,8 +2,8 @@ var bodyParser = require('body-parser');
 var express = require('express'),
     app = express();
 // light|| dark
-var galleryRouter = require('./routes/lightRoutes/gallery/galleryRouter'),
-    userRouter = require('./routes/lightRoutes/users/userRouter');
+var galleryRouter = require('./routes/routes/gallery/galleryRouter'),
+    userRouter = require('./routes/routes/users/userRouter');
 var db = require('./models');
 var Sequelize = require('sequelize'),
     sequelize = new Sequelize('sequelizedb', 'sequelizeowner', '123', {
@@ -16,7 +16,6 @@ app.set('views', './templates/lightGallery');
 
 app.use('/gallery', galleryRouter);
 app.use('/user', userRouter);
-
 
 app.get('/', (req, res) => {
   sequelize.query('SELECT * FROM "Galleries" ORDER BY id DESC LIMIT 20', {type: sequelize.QueryTypes.SELECT})

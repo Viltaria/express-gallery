@@ -1,11 +1,11 @@
 extends ./../layout
 
 block content
-  div.formStyle.flexbox
-    form(method="POST" action="/user/signup" id="form")
+  div.flexbox.formStyle
+    form(action="/gallery" method="POST" id="form")
       fieldset
-        legend REGISTER
-        p First Name:
+        legend Register
+        p First Name
           input(type="text" name="firstName")
         p Last Name:
           input(type="text" name="lastName")
@@ -14,7 +14,7 @@ block content
         p Password:
           input(type="text" name="password")
         p Email:
-          input(type="text" name="email")
+          input(type="text" name="password")
         input(type="submit" value="Submit")
 
   | <style type='text/css'>

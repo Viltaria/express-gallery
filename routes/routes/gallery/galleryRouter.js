@@ -57,13 +57,12 @@ Router.get('/:id', verification, (req, res) => {
     return res.render('error/error');
   });
 });
-Router.post('', verification, (req, res) => {
+Router.post('/', verification, (req, res) => {
   Gallery.create({
     author: req.body.author,
     link: req.body.link,
     description: req.body.description,
   }).then ( (result) => {
-    console.log(result.dataValues.id);
     sequelize.query(`SELECT * FROM "Galleries" WHERE id = ${result.dataValues.id}`, {type: sequelize.QueryTypes.SELECT})
     .then( (data) => {
       return res.render('index/index', {

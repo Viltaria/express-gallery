@@ -18,7 +18,6 @@ h1 {
   align-items:center;
   text-align:center;
 }
-
 .formStyle {
  font-family: 'Open Sans', arial, sans;
   width: 50%;
@@ -32,19 +31,19 @@ h1 {
 .formStyle input[type="text"],
 .formStyle textarea,
 {
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    outline: none;
-    display: block;
-    width: 80%;
-    padding: 7%;
-    border: none;
-    border-bottom: 0.01% solid #ddd;
-    background: transparent;
-    margin-bottom: 1%;
-    font: 16px Arial, Helvetica, sans-serif;
-    height: 45px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  outline: none;
+  display: block;
+  width: 80%;
+  padding: 7%;
+  border: none;
+  border-bottom: 0.01% solid #ddd;
+  background: transparent;
+  margin-bottom: 1%;
+  font: 16px Arial, Helvetica, sans-serif;
+  height: 45px;
 }
 .formStyle textarea{
     resize:none;
