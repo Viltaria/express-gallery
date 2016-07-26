@@ -2,7 +2,7 @@ var bodyParser = require('body-parser');
 var express = require('express'),
     app = express();
 var galleryRouter = require('./routes/lightRoutes/galleryRouter'),
-    userRouter = require('./routes/light/Routes/userRouter');
+    userRouter = require('./routes/lightRoutes/userRouter');
 var db = require('./models');
 var Sequelize = require('sequelize'),
     sequelize = new Sequelize('sequelizedb', 'sequelizeowner', '123', {
@@ -20,16 +20,16 @@ app.use('/gallery', galleryRouter);
 app.get('/', (req, res) => {
   sequelize.query('SELECT * FROM "Galleries" ORDER BY id DESC LIMIT 20', {type: sequelize.QueryTypes.SELECT})
   .then ( (data) => {
-    return res.render('gallery/index/index',{
+    return res.render('index/index',{
       gallery:data,
     });
   }).error ( () => {
-    return res.render('gallery/error/error');
+    return res.render('error/error');
   });
 });
 
 app.get('*', (req, res) => {
-  res.render('gallery/notFound/404');
+  res.render('notFound/404');
 });
 
 var PORTNUM = 3000;
