@@ -10,8 +10,9 @@ var db = require('./models'),
   User = db.User,
   Gallery = db.Gallery;
 var Sequelize = require('sequelize'),
-  sequelize = new Sequelize('sequelizedb', 'sequelizeowner', '123', {
-    host: 'localhost',
+  sequelize = new Sequelize('d781khj8mif314', 'vsenyxpxhxabxq', 'TUCXS9rSbX3PSpY8p-tpXiHs7j', {
+    host: 'ec2-54-243-199-79.compute-1.amazonaws.com',
+    port: '5432',
     dialect: 'postgres',
   });
 var passport = require('passport');
