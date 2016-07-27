@@ -1,0 +1,16 @@
+extends ./../layout
+
+block content
+  div.flexbox.formStyle
+    form(action="/gallery" method="POST" id="form")
+      fieldset
+        legend Login
+        p Username:
+          input(type="text" name="username")
+        p Password:
+          input(type="text" name="password")
+        input(type="submit" value="Submit")
+
+  | <style type='text/css'>
+  include ./style.css
+  | </style>

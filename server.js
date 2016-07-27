@@ -20,7 +20,7 @@ var session = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
 
 app.set('view engine', 'jade');
-app.set('views', './templates/lightGallery');
+app.set('views', './templates/darkGallery');
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
