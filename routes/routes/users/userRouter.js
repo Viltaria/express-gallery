@@ -33,7 +33,7 @@ Router.post('/register', (req, res) => {
           email: req.body.email,
         })
         .then((result) => {
-          return res.render('login/login'); //render user page?
+          return res.redirect(`/user/${req.body.username}`);
         })
         .error(() => {
           return res.render('error/error');
@@ -43,6 +43,28 @@ Router.post('/register', (req, res) => {
 });
 Router.get('/login', (req, res) => {
   return res.render('login/login', { message: req.flash('error') });
+});
+Router.get('/:username', (req, res) => {
+  Gallery.findAll({
+      where: {
+        poster: req.params.username
+      }
+    })
+    .then((data) => {
+      var user;
+      if(req.user) {
+        user = req.user.username;
+      }
+      if(user === req.params.username) {
+        req.params.username = 'Your';
+      } else {
+        req.params.username = req.params.username + '\'s';
+      }
+      return res.render('profile/profile', {
+        username: req.params.username,
+        posts: data
+      });
+    });
 });
 
 module.exports = Router;

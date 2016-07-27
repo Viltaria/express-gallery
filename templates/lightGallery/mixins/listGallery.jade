@@ -12,6 +12,8 @@ mixin listGallery(gallery, pictures, user)
       if user === gallery[0].poster
         a(href="/gallery/#{gallery[0].id}/edit")
           p Edit this picture
+        a(href="/gallery/#{gallery[0].id}/delete")
+          p Delete this picture
       div.whitespace
       div(style="border-bottom:0.5px dotted black").threePics
         a(href=`/gallery/${pictures[0].id}`)

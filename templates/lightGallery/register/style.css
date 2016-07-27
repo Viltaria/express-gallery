@@ -91,7 +91,6 @@ p {
 #headerwrapper {
   margin: 0 auto;
   width: 80%;
-  border-top: 0.5px dotted black;
   overflow: hidden;
   display: flex;
   align-items: center;

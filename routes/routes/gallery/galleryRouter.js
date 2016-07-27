@@ -147,6 +147,7 @@ Router.put('/:id', isAuth, verification, (req, res) => {
     });
 });
 Router.delete('/:id', isAuth, verification, (req, res) => {
+  //make it so they only destroy their own
   Gallery.destroy({
       where: {
         id: req.params.id,
@@ -168,6 +169,34 @@ Router.delete('/:id', isAuth, verification, (req, res) => {
     })
     .error(() => {
       return res.render('error/error');
+    });
+});
+Router.get('/:id/delete', isAuth, verification, (req, res) => {
+  Gallery.findById(req.params.id)
+    .then((data) => {
+      if(data.dataValues.poster === req.user.username) {
+        Gallery.destroy({
+          where: {
+            id: req.params.id
+          }
+        })
+        .then ( (result) =>  {
+           Gallery.findAll({
+            where: {
+              poster: req.user.username
+            }
+          })
+          .then((data) => {
+            return res.render('profile/profile', {
+              username: req.user.username,
+              posts: data
+            });
+          });
+        })
+        .error ( () => {
+          return res.render('error/error');
+        });
+      }
     });
 });
 Router.get('/', (req, res) => {

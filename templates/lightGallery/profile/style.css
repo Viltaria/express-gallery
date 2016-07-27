@@ -21,6 +21,21 @@ a:visited {
   margin-right: 20%;
 }
 
+.flexbox {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+  text-align: center;
+}
+
+.flexbox img {
+  height: 200px;
+  width: 200px;
+  padding: 1px;
+  border: thin solid black;
+}
+
 .smallwhitespace {
   opacity: 0;
   width: 100%;

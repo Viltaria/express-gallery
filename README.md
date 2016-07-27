@@ -1,43 +1,16 @@
-Express Gallery
-===============
+#Synopsis
 
-Express, Sequelize, HTML5, stored on PostgreSQL
+######----link here---- [Read more words!](docs/more_words.md)
+This application allows users to view a few images per page. Users can also log in to add a picture of their own.  Pictures can then be edited and removed freely. Users can also view their own profile page which lists all their posts.
 
-Use the Express, Sequelize, and *almost* any other library or templating engines you want to fulfill the requirements.
-recommended: jade and sass.
-helpful: livereload, gulp for watching compiling sass
+#Code Example
+----index pic?----![Alt text](http://full/path/to/img.jpg "Optional title")
 
----
+#Motivation
+This application was created to make picture viewing neat and efficient.
 
-Create a multi-user Gallery.
-Any user should be able to access these routes:
+#Testing
+Mocha can be used to test if the application is online.  These tests try to add and remove information from the database, with valid and invalid cases..
 
-- `GET /` to view a list of gallery photos
-- `GET /gallery/:id` to see a single gallery photo
-  - each gallery photo should include a link to delete this gallery photo
-  - each gallery photo should include a link to edit this gallery photo
-- `GET /gallery/new` to see a "new photo" form
-  - the form fields are:
-    - `author` : Text
-    - `link` : Text (the image url)
-    - `description` : TextArea
-- `POST /gallery` to create a new gallery photo i
-- `GET /gallery/:id/edit` to see a form to *edit* a gallery photo identified by the `:id` param
-  - the form fields are:
-    - `author` : Text
-    - `link` : Text (the image url)
-    - `description` : TextArea
-- `PUT /gallery/:id` updates a single gallery photo identified by the `:id` param
-- `DELETE /gallery/:id` to delete a single gallery photo identified by the `:id` param
-
----
-
-The layout of the app must match the layouts included in `/layouts`.
-Match the layout as close as you can, using free and open fonts and graphics.
-
----
-
-#### Responsive Layout
-
-- does not have tablet layout
-- uses a background image that is not included, you will have to find something similar (subtlepatterns.com)
+#Contributors
+Viltaria and drewpcchannel
