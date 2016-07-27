@@ -31,6 +31,7 @@ Router.post('/register', (req, res) => {
           username: req.body.username,
           password: hash,
           email: req.body.email,
+          theme: 'light',
         })
         .then((result) => {
           return res.redirect(`/user/${req.body.username}`);
