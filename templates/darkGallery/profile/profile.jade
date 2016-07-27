@@ -1,0 +1,14 @@
+extends ./../layout
+
+block content
+  h1 #{username} posts
+  div.flexbox
+    if posts.length <= 0
+      h1 #{username} page is empty.
+    else
+      each post in posts
+        a(href="/gallery/#{post.id}")
+          img(src=post.link)
+  | <style type='text/css'>
+  include ./style.css
+  | </style>

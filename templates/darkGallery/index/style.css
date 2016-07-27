@@ -23,6 +23,11 @@ h2 {
   color: #625671;
 }
 
+p {
+  text-align:center;
+  color:silver;
+}
+
 img {
   min-width: 300px;
   max-width: 300px;
@@ -128,6 +133,12 @@ span {
   position: absolute;
   left: 3px;
   top: 3px;
+}
+
+.register {
+  margin:0 auto;
+  width: 40%;
+  border-top: 1px solid grey;
 }
 
 #footer {

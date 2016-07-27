@@ -4,7 +4,7 @@ include ./../mixins/listGallery
 
 block content
   if(gallery.length)
-    mixin listGallery(gallery)
+    mixin listGallery(gallery, pictures, user)
   | <script type="text/javascript">
   include ./../mixins/hack.js
   | </script>

@@ -1,4 +1,5 @@
-mixin listGallery(gallery)
+mixin listGallery(gallery, pictures, user)
+    -console.log(user);
     if gallery.length === 1
       div.flexboxE
         a(href=gallery[0].link
@@ -8,6 +9,16 @@ mixin listGallery(gallery)
       div.flexboxE
         div.description
           h2 #{gallery[0].description}
+      div.register
+        if !user
+          p Like the site?
+          p
+            a(href="/user/register/") Register!
+        else
+          p
+            a(href="/user/logout/") Logout
+          p
+            a(href="/user/me/") Your Profile
     else
       div.flexbox.hover
         each picture in gallery
@@ -19,3 +30,13 @@ mixin listGallery(gallery)
       div.nav.flexboxE
           div.prev#prev
           div.next#next
+       if user
+        p
+          a(href="/user/logout") Logout
+        p
+          a(href="/gallery/new") New Post
+        p
+          a(href="/user/me/") Your Profile
+      else
+        p
+          a(href="/user/login") Login to post a new picture!

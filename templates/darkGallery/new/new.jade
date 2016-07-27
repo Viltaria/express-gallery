@@ -2,16 +2,16 @@ extends ./../layout
 
 block content
   div.flexbox.formStyle
-    form(action="/gallery" method="POST" id="form")
-      fieldset
-        legend New Picture
-        p Author:
-          input(type="text" name="author")
-        p Link:
-          input(type="text" name="link")
-        p Description:
-         textarea(rows="4" cols="50" name="description" form="form")
-        input(type="submit" value="Submit")
+    form(action="/gallery" method="POST")
+      p Author
+      input(type="text" name="author" required="required")
+      p Link
+      input(type="text" name="link" required="required")
+      p Description
+      input(type="text" name="description" required="required")
+      br
+      br
+      input(type="submit" value="Submit")
 
   | <style type='text/css'>
   include ./style.css

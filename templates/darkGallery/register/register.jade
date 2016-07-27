@@ -2,21 +2,24 @@ extends ./../layout
 
 block content
   div.flexbox.formStyle
-    form(action="/gallery" method="POST" id="form")
-      fieldset
-        legend Register
-        p First Name
-          input(type="text" name="firstName")
-        p Last Name:
-          input(type="text" name="lastName")
-        p Username:
-          input(type="text" name="username")
-        p Password:
-          input(type="text" name="password")
-        p Email:
-          input(type="text" name="password")
-        input(type="submit" value="Submit")
-
+    form(action="/user/register" method="POST" id="form")
+      p First Name
+      input(type="text" name="firstName" required="required")
+      p Last Name
+      input(type="text" name="lastName" required="required")
+      p Username
+      input(type="text" name="username" required="required")
+      p Password
+      input(type="text" name="password" required="required")
+      p Email
+      input(type="text" name="email" required="required")
+      br
+      br
+      input(type="submit" value="Submit")
+  div.register
+    p Already have an account?
+    p
+      a(href="/user/login") Login!
   | <style type='text/css'>
   include ./style.css
   | </style>

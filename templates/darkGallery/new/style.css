@@ -11,19 +11,16 @@ h1 {
   color: #B2FFFF;
 }
 
+p {
+  text-align:center;
+  color: silver;
+}
+
 img {
   min-width: 300px;
   max-width: 300px;
   min-height: 300px;
   max-height: 300px;
-}
-
-fieldset p {
-  color: silver;
-}
-
-fieldset legend {
-  color: silver;
 }
 
 .flexbox {
@@ -88,7 +85,13 @@ fieldset legend {
   background: linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
   background-color: #34CACA;
 }
-
+.flexbox {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  text-align: center;
+}
 #footer {
   display: flex;
   align-content: center;
