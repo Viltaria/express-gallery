@@ -22,8 +22,21 @@ var flash = require('connect-flash');
 
 app.set('view engine', 'jade');
 
-var lightOrDark = 'dark'; //light theme by default
-app.set('views', `./templates/${lightOrDark}Gallery`);
+var lightOrDark;
+if(lightOrDark === undefined) {
+  lightOrDark = 'light'; //light theme by default
+  app.set('views', `./templates/${lightOrDark}Gallery`);
+}
+app.get('/light', (req, res) => {
+  lightOrDark = 'light';
+  app.set('views', `./templates/${lightOrDark}Gallery`);
+  res.redirect('/');
+});
+app.get('/dark', (req, res) => {
+  lightOrDark = 'dark';
+  app.set('views', `./templates/${lightOrDark}Gallery`);
+  res.redirect('/');
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
