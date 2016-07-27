@@ -1,19 +1,19 @@
 var bodyParser = require('body-parser'),
-    cookieParser = require('cookie-parser');
+  cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
 var express = require('express'),
-    app = express();
+  app = express();
 var config = require('./config/config');
 var galleryRouter = require('./routes/routes/gallery/galleryRouter'),
-    userRouter = require('./routes/routes/users/userRouter');
+  userRouter = require('./routes/routes/users/userRouter');
 var db = require('./models'),
-    User = db.User,
-    Gallery = db.Gallery;
+  User = db.User,
+  Gallery = db.Gallery;
 var Sequelize = require('sequelize'),
-    sequelize = new Sequelize('sequelizedb', 'sequelizeowner', '123', {
-      host: 'localhost',
-      dialect: 'postgres',
-    });
+  sequelize = new Sequelize('sequelizedb', 'sequelizeowner', '123', {
+    host: 'localhost',
+    dialect: 'postgres',
+  });
 var passport = require('passport');
 var session = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
@@ -25,7 +25,7 @@ app.set('view engine', 'jade');
 var lightOrDark = 'light'; //light theme by default
 app.set('views', `./templates/${lightOrDark}Gallery`);
 
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(methodOverride((req, res) => {
@@ -36,48 +36,45 @@ app.use(methodOverride((req, res) => {
   }
 }));
 app.use(session({
-  secret:config.SECRET,
-  saveUninitialized:true,
+  secret: config.SECRET,
+  saveUninitialized: true,
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 passport.use(new LocalStrategy((username, password, done) => {
   User.findOne({
-    where: {username : username},
-  })
-  .then( (result) => {
-    var p = false;
-    if(result) {
-      p = result.dataValues.password;
-    }
-    bcrypt.compare(password, p, (err, res) => {
-      if(res)
-      {
-        return done(null, result.dataValues);
+      where: { username: username },
+    })
+    .then((result) => {
+      var p = false;
+      if (result) {
+        p = result.dataValues.password;
       }
-      else
-      {
-        return done(null, false, {message: 'Failed login, please try again.'}); // on failed login
-      }
+      bcrypt.compare(password, p, (err, res) => {
+        if (res) {
+          return done(null, result.dataValues);
+        } else {
+          return done(null, false, { message: 'Failed login, please try again.' }); // on failed login
+        }
+      });
+    })
+    .error(() => {
+      return done(null, false);
     });
-  })
-  .error ( () => {
-    return done(null, false);
-  });
 }));
 
-passport.serializeUser((user,done) => {
+passport.serializeUser((user, done) => {
   return done(null, user);
 });
-passport.deserializeUser((user,done) => {
+passport.deserializeUser((user, done) => {
   return done(null, user);
 });
 
 app.use('/gallery', galleryRouter);
 app.use('/user', userRouter);
 
-app.post('/login', passport.authenticate('local',{
+app.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/user/login',
   failureFlash: true,
@@ -85,22 +82,22 @@ app.post('/login', passport.authenticate('local',{
 
 app.get('/', (req, res) => {
   Gallery.findAll({
-    limit: 20,
-    order: 'ID DESC'
-  })
-  .then ( (data) => {
-    var user = false;
-    if(req.user) {
-      user = req.user.username;
-    }
-    return res.render('index/index',{
-      gallery:data,
-      user:user,
+      limit: 20,
+      order: 'ID DESC'
+    })
+    .then((data) => {
+      var user = false;
+      if (req.user) {
+        user = req.user.username;
+      }
+      return res.render('index/index', {
+        gallery: data,
+        user: user,
+      });
+    })
+    .error(() => {
+      return res.render('error/error');
     });
-  })
-  .error ( () => {
-    return res.render('error/error');
-  });
 });
 
 app.get('*', (req, res) => {

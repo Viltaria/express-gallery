@@ -1,85 +1,96 @@
 /* This can work as the basic template for  form submissions only*/
+
 @import url(https://fonts.googleapis.com/css?family=Oswald);
 body {
-  background-color:#222233;
-  font-family:Oswald, Serif;
+  background-color: #222233;
+  font-family: Oswald, Serif;
 }
+
 h1 {
-  text-align:center;
+  text-align: center;
   color: #B2FFFF;
 }
+
 img {
-  min-width:300px;
-  max-width:300px;
-  min-height:300px;
-  max-height:300px;
+  min-width: 300px;
+  max-width: 300px;
+  min-height: 300px;
+  max-height: 300px;
 }
+
 fieldset p {
-  color:silver;
+  color: silver;
 }
+
 fieldset legend {
-  color:silver;
+  color: silver;
 }
+
 .flexbox {
-  display:flex;
-  align-content:center;
-  justify-content:center;
-  flex-wrap:wrap;
-  align-items:center;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .formStyle {
- font-family: 'Open Sans', arial, sans;
+  font-family: 'Open Sans', arial, sans;
   width: 500px;
   padding: 30px;
   background: #222233;
   margin: 50px auto;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
   -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
-  -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
+  -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
 }
+
 .formStyle input[type="text"],
 .formStyle textarea,
 {
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    outline: none;
-    display: block;
-    width: 100%;
-    padding: 7px;
-    border: none;
-    border-bottom: 1px solid #ddd;
-    background: transparent;
-    margin-bottom: 10px;
-    font: 16px Arial, Helvetica, sans-serif;
-    height: 45px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  outline: none;
+  display: block;
+  width: 100%;
+  padding: 7px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  background: transparent;
+  margin-bottom: 10px;
+  font: 16px Arial, Helvetica, sans-serif;
+  height: 45px;
 }
-.formStyle textarea{
-    resize:none;
-    overflow: hidden;
+
+.formStyle textarea {
+  resize: none;
+  overflow: hidden;
 }
-.formStyle input[type="submit"]{
-    -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
-    box-shadow: inset 0px 1px 0px 0px #45D6D6;
-    background-color: #2CBBBB;
-    border: 1px solid #27A0A0;
-    display: inline-block;
-    cursor: pointer;
-    color: #FFFFFF;
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-size: 14px;
-    padding: 8px 18px;
-    text-decoration: none;
-    text-transform: uppercase;
+
+.formStyle input[type="submit"] {
+  -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+  -webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+  box-shadow: inset 0px 1px 0px 0px #45D6D6;
+  background-color: #2CBBBB;
+  border: 1px solid #27A0A0;
+  display: inline-block;
+  cursor: pointer;
+  color: #FFFFFF;
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 14px;
+  padding: 8px 18px;
+  text-decoration: none;
+  text-transform: uppercase;
 }
+
 .formStyle input[type="submit"]:hover {
-    background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
-    background-color:#34CACA;
+  background: linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
+  background-color: #34CACA;
 }
+
 #footer {
-  display:flex;
-  align-content:center;
+  display: flex;
+  align-content: center;
   justify-content: space-around;
 }
