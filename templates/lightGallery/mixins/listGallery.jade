@@ -25,7 +25,11 @@ mixin listGallery(gallery, pictures, user)
           p #{pictures[2].author}
       if !user
         p Like the site?
+        p
           a(href="/user/register/") Register!
+      else
+        p
+          a(href="/user/logout/") Logout
     else
       div.whitespace
       div#centerPicContainer
@@ -52,3 +56,11 @@ mixin listGallery(gallery, pictures, user)
         a(href=`/gallery/${gallery[6].id}`)
           img(src=gallery[6].link)
           p #{gallery[6].author}
+      if user
+        p
+          a(href="/user/logout") Logout
+        p
+          a(href="/gallery/new") New Post
+      else
+        p
+          a(href="/user/login") Login to post a new picture!

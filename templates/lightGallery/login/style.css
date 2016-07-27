@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto);
 body {
   background-color:#D3D3D3;
-  font-family:Roboto, Serif;
+  font-family:"Helvetica", Serif;
 }
 h1 {
   text-align:center;
@@ -9,14 +9,19 @@ h1 {
 p {
   text-align:center;
 }
+a {
+  color: #0000FF;
+}
+a:visited {
+  color: purple;
+}
 .container {
   background-color:#FFFFFF;
   margin-left:20%;
   margin-right:20%;
 }
 .formStyle {
- font-family: 'Open Sans', arial, sans;
-  width: 50%;
+  font-family: "Helvetica", arial, sans;
   padding: 3%;
   background: #D3D3D3;
   margin: 5% auto;
@@ -25,7 +30,6 @@ p {
   -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
 }
 .formStyle input[type="text"],
-.formStyle textarea,
 {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -38,12 +42,8 @@ p {
     border-bottom: 0.01% solid #ddd;
     background: transparent;
     margin-bottom: 1%;
-    font: 16px Arial, Helvetica, sans-serif;
+    font: 16px Helvetica,Arial, sans-serif;
     height: 45px;
-}
-.formStyle textarea{
-    resize:none;
-    overflow: hidden;
 }
 .formStyle input[type="submit"]{
     -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
@@ -54,7 +54,7 @@ p {
     display: inline-block;
     cursor: pointer;
     color: #FFFFFF;
-    font-family: 'Open Sans Condensed', sans-serif;
+    font-family:  sans-serif;
     font-size: 14px;
     padding: 8px 18px;
     text-decoration: none;
@@ -105,3 +105,4 @@ p {
   color:grey;
   font-size:1vw;
 }*/
+

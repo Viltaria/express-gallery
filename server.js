@@ -4,7 +4,6 @@ var methodOverride = require('method-override');
 var express = require('express'),
     app = express();
 var config = require('./config/config');
-// light|| dark
 var galleryRouter = require('./routes/routes/gallery/galleryRouter'),
     userRouter = require('./routes/routes/users/userRouter');
 var db = require('./models'),
@@ -18,9 +17,13 @@ var Sequelize = require('sequelize'),
 var passport = require('passport');
 var session = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
+var bcrypt = require('bcrypt');
+var flash = require('connect-flash');
 
 app.set('view engine', 'jade');
-app.set('views', './templates/darkGallery');
+
+var lightOrDark = 'light'; //light theme by default
+app.set('views', `./templates/${lightOrDark}Gallery`);
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
@@ -38,17 +41,28 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 passport.use(new LocalStrategy((username, password, done) => {
   User.findOne({
     where: {username : username},
   })
   .then( (result) => {
-    if(password === result.dataValues.password || null) {
-      return done(null, result.dataValues);
-    } else {
-      return done(null, false); // on failed login
+    var p = false;
+    if(result) {
+      p = result.dataValues.password;
     }
-  }).error ( () => {
+    bcrypt.compare(password, p, (err, res) => {
+      if(res)
+      {
+        return done(null, result.dataValues);
+      }
+      else
+      {
+        return done(null, false, {message: 'Failed login, please try again.'}); // on failed login
+      }
+    });
+  })
+  .error ( () => {
     return done(null, false);
   });
 }));
@@ -66,6 +80,7 @@ app.use('/user', userRouter);
 app.post('/login', passport.authenticate('local',{
   successRedirect: '/',
   failureRedirect: '/user/login',
+  failureFlash: true,
 }));
 
 app.get('/', (req, res) => {
@@ -74,8 +89,13 @@ app.get('/', (req, res) => {
     order: 'ID DESC'
   })
   .then ( (data) => {
+    var user = false;
+    if(req.user) {
+      user = req.user.username;
+    }
     return res.render('index/index',{
       gallery:data,
+      user:user,
     });
   })
   .error ( () => {

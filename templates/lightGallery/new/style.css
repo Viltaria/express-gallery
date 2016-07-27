@@ -1,10 +1,15 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto);
 body {
   background-color:#D3D3D3;
-  font-family:Roboto, Serif;
+  font-family:"Helvetica", Serif;
 }
 h1 {
   text-align:center;
+}
+a {
+  color: #0000FF;
+}
+a:visited {
+  color: purple;
 }
 .container {
   background-color:#FFFFFF;
@@ -19,8 +24,7 @@ h1 {
   text-align:center;
 }
 .formStyle {
- font-family: 'Open Sans', arial, sans;
-  width: 50%;
+ font-family: "Helvetica", arial, sans;
   padding: 3%;
   background: #D3D3D3;
   margin: 5% auto;
@@ -42,7 +46,7 @@ h1 {
   border-bottom: 0.01% solid #ddd;
   background: transparent;
   margin-bottom: 1%;
-  font: 16px Arial, Helvetica, sans-serif;
+  font: 16px "Helvetica", sans-serif;
   height: 45px;
 }
 .formStyle textarea{
@@ -58,7 +62,7 @@ h1 {
     display: inline-block;
     cursor: pointer;
     color: #FFFFFF;
-    font-family: 'Open Sans Condensed', sans-serif;
+    font-family: "Helvetica", Arial, sans-serif;
     font-size: 14px;
     padding: 8px 18px;
     text-decoration: none;

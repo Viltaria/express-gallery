@@ -12,7 +12,6 @@ var verification = require('./verification');
 var db = require('./../../../models'),
     Gallery = db.Gallery,
     User = db.User;
-var config = require('./../../../config/config');
 
 var isAuth = (req, res, next) => {
   if(!req.isAuthenticated()) {
@@ -49,10 +48,12 @@ Router.get('/:id', verification, (req, res) => {
         pictures:array,
         user: user,
       });
-    }).error ( () => {
+    })
+    .error ( () => {
       return res.render('error/error');
     });
-  }).error ( () => {
+  })
+  .error ( () => {
     return res.render('error/error');
   });
 });
@@ -178,8 +179,13 @@ Router.get('/', (req, res) => {
     order: 'ID DESC'
   })
   .then ( (data) => {
+    var user = false;
+    if(req.user) {
+      user = req.user.username;
+    }
     return res.render('index/index',{
       gallery:data,
+      user: user,
     });
   })
   .error ( () => {

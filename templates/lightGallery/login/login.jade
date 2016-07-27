@@ -1,16 +1,21 @@
 extends ./../layout
-
 block content
-  h1 Login
-  div.flexbox.formStyle
-    form(method="POST" action="/login")
-      p Username:
-        input(type="text" name="username")
-      p Password:
-        input(type="password" name="password")
-      button(type="submit") Login
-  p Don't have an account yet?
-    a(href="/user/register") Register!
+  div.login
+    h1 Login
+    if message !== undefined
+      p(style="color:red;font-style:italic;") #{message}
+    div.flexbox.formStyle
+      form(method="POST" action="/login")
+        p Username
+        input(type="text" name="username" required="required")
+        p Password
+        input(type="password" name="password" required="required")
+        br
+        br
+        input(type="submit" value="Login")
+    p Don't have an account yet?
+    p
+      a(href="/user/register") Register!
   | <style type='text/css'>
   include ./style.css
   | </style>

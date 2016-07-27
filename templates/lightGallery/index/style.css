@@ -10,13 +10,21 @@
 }
 body {
   background-color:#D3D3D3;
-  font-family:Roboto, Serif;
+  font-family:"Helvetica", Arial, Serif;
+  color: #555;
 }
 h1 {
   text-align:center;
+  color: #333;
 }
 p {
   text-align:center;
+}
+a {
+  color: #0000FF;
+}
+a:visited {
+  color: purple;
 }
 .border {
   box-shadow: 0px 0px 0px 3px #333;
@@ -38,8 +46,8 @@ p {
   text-align:center;
 }
 .flexbox img{
-  max-height:50%;
-  min-height:50%;
+  max-height:70;
+  min-height:70%;
   max-width:70%;
   min-width:70%;
 }
@@ -49,9 +57,9 @@ p {
   height:5px;
 }
 .threePics {
-  width:80%;
+  width:100%;
   margin:0 auto;
-  padding-top: 25px;
+  padding-top: 35px;
   padding-bottom:10px;
   border-top:0.5px dotted black;
   display:flex;
@@ -66,8 +74,10 @@ p {
   text-decoration: none;
 }
 .threePics a>img {
-  height:100px;
-  width:100px;
+  height:200px;
+  width:200px;
+  padding:1px;
+  border:thin solid black;
 }
 .whitespace {
   opacity:0;
