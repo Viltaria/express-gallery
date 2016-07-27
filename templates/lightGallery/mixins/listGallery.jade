@@ -32,6 +32,8 @@ mixin listGallery(gallery, pictures, user)
       else
         p
           a(href="/user/logout/") Logout
+        p
+          a(href="/user/me/") Your Profile
     else
       div.whitespace
       div#centerPicContainer
@@ -63,6 +65,8 @@ mixin listGallery(gallery, pictures, user)
           a(href="/user/logout") Logout
         p
           a(href="/gallery/new") New Post
+        p
+          a(href="/user/me/") Your Profile
       else
         p
           a(href="/user/login") Login to post a new picture!

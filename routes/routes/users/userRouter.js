@@ -44,6 +44,9 @@ Router.post('/register', (req, res) => {
 Router.get('/login', (req, res) => {
   return res.render('login/login', { message: req.flash('error') });
 });
+Router.get('/me', (req, res) => {
+  return res.redirect(`/user/${req.user.username}`);
+});
 Router.get('/:username', (req, res) => {
   Gallery.findAll({
       where: {

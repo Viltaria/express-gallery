@@ -13,4 +13,6 @@ This application was created to make picture viewing neat and efficient.
 Mocha can be used to test if the application is online.  These tests try to add and remove information from the database, with valid and invalid cases..
 
 #Contributors
-Viltaria and drewpcchannel
+[Viltaria](https://www.github.com/Viltaria) and [drewpcchannel](http://www.github.com/drewpcchannel)
+
+[![forthebadge](http://forthebadge.com/images/badges/fuck-it-ship-it.svg)](http://forthebadge.com)
