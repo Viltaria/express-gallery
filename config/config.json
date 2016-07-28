@@ -15,9 +15,9 @@
     "dialect": "postgres"
   },
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
+    "username": "sequelizeowner",
+    "password": "123",
+    "database": "sequelizedb",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
