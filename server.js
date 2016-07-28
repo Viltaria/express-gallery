@@ -116,7 +116,7 @@ app.get('*', (req, res) => {
 });
 
 var PORTNUM = process.env.PORT || 3000;
-
+//port
 app.listen(PORTNUM, function() {
   console.log('Now listening in on port ' + PORTNUM);
   db.sequelize.sync();
