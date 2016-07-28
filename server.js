@@ -22,18 +22,18 @@ app.set('view engine', 'jade');
 var lightOrDark = 'light';
 var first = 1;
 if(first === 1) {
-  app.set('views', `./templates/${lightOrDark}Gallery`);
+  app.set('views', `/templates/${lightOrDark}Gallery`);
   first++;
 }
 
 app.get('/light', (req, res) => {
   lightOrDark = 'light';
-  app.set('views', `./templates/${lightOrDark}Gallery`);
+  app.set('views', `/templates/${lightOrDark}Gallery`);
   res.redirect('/');
 });
 app.get('/dark', (req, res) => {
   lightOrDark = 'dark';
-  app.set('views', `./templates/${lightOrDark}Gallery`);
+  app.set('views', `/templates/${lightOrDark}Gallery`);
   res.redirect('/');
 });
 
