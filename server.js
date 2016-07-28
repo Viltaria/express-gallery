@@ -9,29 +9,13 @@ var galleryRouter = require('./routes/routes/gallery/galleryRouter'),
 var db = require('./models'),
   User = db.User,
   Gallery = db.Gallery;
-var Sequelize = require('sequelize'),
-  sequelize = new Sequelize('sequeliedb', 'sequelizeowner', '123', {
-    host: 'localhost',
-    dialect: 'postgres',
-  });
+var Sequelize = require('sequelize');
+
 var passport = require('passport');
 var session = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt');
 var flash = require('connect-flash');
-var pg = require('pg');
-
-pg.defaults.ssl = true;
-pg.connect(process.env.DATABASE_URL, function(err, client) {
-  if (err) throw err;
-  console.log('Connected to postgres! Getting schemas...');
-
-  client
-    .query('SELECT table_schema,table_name FROM information_schema.tables;')
-    .on('row', function(row) {
-      console.log(JSON.stringify(row));
-    });
-});
 
 app.set('view engine', 'jade');
 
