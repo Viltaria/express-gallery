@@ -51,6 +51,7 @@ app.use(methodOverride((req, res) => {
 }));
 app.use(session({
   secret: config.SECRET,
+  resave:true,
   saveUninitialized: true,
 }));
 app.use(passport.initialize());
