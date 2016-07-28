@@ -19,11 +19,9 @@ var flash = require('connect-flash');
 
 app.set('view engine', 'jade');
 
-var lightOrDark = 'light';
-var first = 1;
-if(first === 1) {
+var lightOrDark;
+if(!lightOrDark) {
   app.set('views', `./templates/${lightOrDark}Gallery`);
-  first++;
 }
 
 app.get('/light', (req, res) => {
