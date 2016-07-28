@@ -3,7 +3,11 @@ var bodyParser = require('body-parser'),
 var methodOverride = require('method-override');
 var express = require('express'),
   app = express();
-var config = require('./config/config');
+try{
+  var config = require('./config/config');
+}catch(e) {
+  var config = {SECRET: 'placeholder'};
+}
 var galleryRouter = require('./routes/routes/gallery/galleryRouter'),
   userRouter = require('./routes/routes/users/userRouter');
 var db = require('./models'),
