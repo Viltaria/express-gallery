@@ -1,10 +1,7 @@
 #Synopsis
 
-######----link here---- [Read more words!](docs/more_words.md)
-This application allows users to view a few images per page. Users can also log in to add a picture of their own.  Pictures can then be edited and removed freely. Users can also view their own profile page which lists all their posts.
-
-#Code Example
-----index pic?----![Alt text](http://full/path/to/img.jpg "Optional title")
+######[Demo](http://express-gallery1.herokuapp.com)
+This application allows users to view a few images per page. Users can also log in to add a picture of their own.  Pictures can then be edited and removed freely. Users can also view their own profile page which lists all their posts. (Switching between themes is broken due to heroku's viewing structure)
 
 #Motivation
 This application was created to make picture viewing neat and efficient.
