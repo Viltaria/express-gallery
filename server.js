@@ -21,6 +21,7 @@ app.set('view engine', 'jade');
 
 var lightOrDark;
 if(!lightOrDark) {
+  lightOrDark = 'light';
   app.set('views', `./templates/${lightOrDark}Gallery`);
 }
 
@@ -92,27 +93,11 @@ app.post('/login', passport.authenticate('local', {
 }));
 
 app.get('/', (req, res) => {
-  Gallery.findAll({
-      limit: 20,
-      order: 'ID DESC'
-    })
-    .then((data) => {
-      var user = false;
-      if (req.user) {
-        user = req.user.username;
-      }
-      return res.render('index/index', {
-        gallery: data,
-        user: user,
-      });
-    })
-    .error(() => {
-      return res.render('error/error');
-    });
+  return res.redirect('/gallery');
 });
 
 app.get('*', (req, res) => {
-  res.render('notFound/404');
+  return res.render('notFound/404');
 });
 
 var PORTNUM = process.env.PORT || 3000;
