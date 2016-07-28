@@ -19,7 +19,6 @@ var flash = require('connect-flash');
 
 app.set('view engine', 'jade');
 
-var lightOrDark;
 if(lightOrDark === undefined) {
   lightOrDark = 'light'; //light theme by default
   app.set('views', `./templates/${lightOrDark}Gallery`);
