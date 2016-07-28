@@ -131,7 +131,7 @@ app.get('*', (req, res) => {
   res.render('notFound/404');
 });
 
-var PORTNUM = 5432;
+var PORTNUM = 3000;
 
 app.listen(PORTNUM, function() {
   console.log('Now listening in on port ' + PORTNUM);

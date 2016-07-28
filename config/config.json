@@ -7,11 +7,10 @@
     "dialect": "postgres"
   },
   "development": {
-    "username": "vsenyxpxhxabxq",
-    "password": "TUCXS9rSbX3PSpY8p-tpXiHs7j",
-    "database": "d781khj8mif314",
-    "host": "ec2-54-243-199-79.compute-1.amazonaws.com",
-    "port": "5432",
+    "username": "sequelizeowner",
+    "password": "123",
+    "database": "sequelizedb",
+    "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
