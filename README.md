@@ -13,3 +13,16 @@ Mocha can be used to test if the application is online.  These tests try to add 
 [Viltaria](https://www.github.com/Viltaria) and [drewpcchannel](http://www.github.com/drewpcchannel)
 
 [![forthebadge](http://forthebadge.com/images/badges/fuck-it-ship-it.svg)](http://forthebadge.com)
+
+###Light Theme
+![pic](https://i.imgur.com/IvTdLDr.png)
+![pic](https://i.imgur.com/4YLS2Vg.png)
+#Sign up pages
+![pic](https://i.imgur.com/WGMNL0G.png)
+![pic](https://i.imgur.com/1oWN2Ap.png)
+#Login pages
+![pic](https://i.imgur.com/pDjhxd6.png)
+![pic](https://i.imgur.com/2L4ijVk.png)
+##Dark Theme
+![pic](https://i.imgur.com/hsI1yji.png)
+
