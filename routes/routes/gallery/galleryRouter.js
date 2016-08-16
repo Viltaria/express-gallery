@@ -1,29 +1,22 @@
-var express = require('express'),
-  Router = express.Router();
-var bodyParser = require('body-parser'),
-  cookieParser = require('cookie-parser');
-var methodOverride = require('method-override');
-var Sequelize = require('sequelize'),
-  sequelize = new Sequelize('sequelizedb', 'sequelizeowner', '123', {
-    host: 'localhost',
-    dialect: 'postgres',
-  });
-var verification = require('./verification');
-var db = require('./../../../models'),
-  Gallery = db.Gallery,
-  User = db.User;
+const express = require('express');
 
-var isAuth = (req, res, next) => {
+const router = express.Router();
+
+const verification = require('./verification');
+const db = require('./../../../models');
+
+const Gallery = db.Gallery;
+
+const isAuth = (req, res, next) => {
   if (!req.isAuthenticated()) {
     return res.redirect('/user/register');
   }
   return next();
 };
 
-Router.get('/new', isAuth, verification, (req, res) => {
-  return res.render('new/new');
-});
-Router.get('/:id', verification, (req, res) => {
+
+router.get('/new', isAuth, verification, (req, res) => res.render('new/new'));
+router.get('/:id', verification, (req, res) => {
   if (isNaN(Number(req.params.id))) {
     return res.render('notFound/404');
   }
@@ -32,194 +25,172 @@ Router.get('/:id', verification, (req, res) => {
       if (!data) {
         return res.render('notFound/404');
       }
-      var arr = [data.dataValues];
+      const arr = [data.dataValues];
       Gallery.findAll({
-          limit: 3,
-          order: 'RANDOM()'
-        })
+        limit: 3,
+        order: 'RANDOM()',
+      })
         .then((chunk) => {
-          var array = [chunk[0].dataValues, chunk[1].dataValues, chunk[2].dataValues]; //change this make it fluid
-          var user = false;
+          const array = [chunk[0].dataValues, chunk[1].dataValues, chunk[2].dataValues];
+          let user = false;
           if (req.user) {
             user = req.user.username;
           }
           return res.render('index/index', {
             gallery: arr,
             pictures: array,
-            user: user,
+            user,
           });
         })
-        .error(() => {
-          return res.render('error/error');
-        });
+        .error(() => res.render('error/error'));
+      return false;
     })
-    .error(() => {
-      return res.render('error/error');
-    });
+    .error(() => res.render('error/error'));
+  return false;
 });
-Router.post('/', isAuth, verification, (req, res) => {
+router.post('/', isAuth, verification, (req, res) => {
   Gallery.create({
-      author: req.body.author,
-      link: req.body.link,
-      description: req.body.description,
-      poster: req.user.username,
-    })
-    .then((result) => {
-      Gallery.findById(result.dataValues.id)
+    author: req.body.author,
+    link: req.body.link,
+    description: req.body.description,
+    poster: req.user.username,
+  })
+    .then((get) => {
+      Gallery.findById(get.dataValues.id)
         .then((data) => {
-          var arr = [data];
+          const arr = [data];
           Gallery.findAll({
-              limit: 3,
-              order: 'RANDOM()'
-            })
+            limit: 3,
+            order: 'RANDOM()',
+          })
             .then((result) => {
-              var array = [result[0].dataValues, result[1].dataValues, result[2].dataValues]; //make this fluid
-              var user = false;
+              const array = [result[0].dataValues, result[1].dataValues, result[2].dataValues];
+              let user = false;
               if (req.user) {
                 user = req.user.username;
               }
               return res.render('index/index', {
                 gallery: arr,
                 pictures: array,
-                user: user,
+                user,
               });
             })
-            .error(() => {
-              return res.render('error/error');
-            });
+            .error(() => res.render('error/error'));
         });
     })
-    .error(() => {
-      return res.render('error/error');
-    });
+    .error(() => res.render('error/error'));
 });
-Router.get('/:id/edit', isAuth, verification, (req, res) => {
+router.get('/:id/edit', isAuth, verification, (req, res) => {
   Gallery.findById(req.params.id)
     .then((data) => {
-      var arr = [data];
+      const arr = [data];
       return res.render('edit/edit', {
         gallery: arr,
         id: req.params.id,
       });
     })
-    .error(() => {
-      return res.render('error/error');
-    });
+    .error(() => res.render('error/error'));
 });
-Router.put('/:id', isAuth, verification, (req, res) => {
+router.put('/:id', isAuth, verification, (req, res) => {
   Gallery.update({
-      author: req.body.author,
-      link: req.body.link,
-      description: req.body.description
-    }, {
+    author: req.body.author,
+    link: req.body.link,
+    description: req.body.description,
+  },
+    {
       fields: ['author', 'link', 'description'],
       where: {
-        id: req.params.id
-      }
-    }).then(() => {
-      Gallery.findById(req.params.id)
-        .then((data) => {
-          var arr = [data];
-          Gallery.findAll({
-              limit: 3,
-              order: 'RANDOM()'
-            })
-            .then((result) => {
-              var array = [result[0].dataValues, result[1].dataValues, result[2].dataValues]; //make this fluid
-              if (req.user) {
-                user = req.user.username;
-              } else {
-                user = false;
-              }
-              return res.render('index/index', {
-                gallery: arr,
-                pictures: array,
-                user: user,
-              });
-            })
-            .error(() => {
-              return res.render('error/error');
-            });
-        });
-    })
-    .error(() => {
-      return res.render('error/error');
-    });
-});
-Router.delete('/:id', isAuth, verification, (req, res) => {
-  //make it so they only destroy their own
-  Gallery.destroy({
-      where: {
         id: req.params.id,
-      }
+      },
     })
+      .then(() => {
+        Gallery.findById(req.params.id)
+          .then((data) => {
+            const arr = [data];
+            Gallery.findAll({
+              limit: 3,
+              order: 'RANDOM()',
+            })
+              .then((result) => {
+                const array = [result[0].dataValues, result[1].dataValues, result[2].dataValues];
+                let user = false;
+                if (req.user) {
+                  user = req.user.username;
+                }
+                return res.render('index/index', {
+                  gallery: arr,
+                  pictures: array,
+                  user,
+                });
+              })
+            .error(() => res.render('error/error'));
+          });
+      })
+    .error(() => res.render('error/error'));
+});
+router.delete('/:id', isAuth, verification, (req, res) => {
+  Gallery.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
     .then((data) => {
       if (data.rowCount === 0) {
         return res.render('error/error');
       }
+      return true;
     });
   Gallery.findAll({
-      limit: 20,
-      order: 'ID DESC',
-    })
-    .then((data) => {
-      return res.render('index/index', {
-        gallery: data,
-      });
-    })
-    .error(() => {
-      return res.render('error/error');
-    });
+    limit: 20,
+    order: 'ID DESC',
+  })
+    .then((data) => res.render('index/index', { gallery: data }))
+    .error(() => res.render('error/error'));
 });
-Router.get('/:id/delete', isAuth, verification, (req, res) => {
+router.get('/:id/delete', isAuth, verification, (req, res) => {
   Gallery.findById(req.params.id)
     .then((data) => {
-      if(data.dataValues.poster === req.user.username) {
+      if (data.dataValues.poster === req.user.username) {
         Gallery.destroy({
           where: {
-            id: req.params.id
-          }
+            id: req.params.id,
+          },
         })
-        .then ( (result) =>  {
-           Gallery.findAll({
+        .then(() => {
+          Gallery.findAll({
             where: {
-              poster: req.user.username
-            }
+              poster: req.user.username,
+            },
           })
-          .then((data) => {
-            return res.render('profile/profile', {
+          .then((posts) => {
+            res.render('profile/profile', {
               username: req.user.username,
-              posts: data
+              posts,
             });
-          });
+          })
+          .error(() => res.render('error/error'));
         })
-        .error ( () => {
-          return res.render('error/error');
-        });
+        .error(() => res.render('error/error'));
       }
     });
 });
-Router.get('/', (req, res) => {
+router.get('/', (req, res) => {
   Gallery.findAll({
-      limit: 20,
-      order: 'ID DESC'
-    })
+    limit: 20,
+    order: 'ID DESC',
+  })
     .then((data) => {
-      var user = false;
+      let user = false;
       if (req.user) {
         user = req.user.username;
       }
       return res.render('index/index', {
         gallery: data,
-        user: user,
+        user,
       });
     })
-    .error(() => {
-      return res.render('error/error');
-    });
+    .error(() => res.render('error/error'));
 });
-Router.get('*', (req, res) => {
-  return res.render('notFound/404');
-});
+router.get('*', (req, res) => res.render('notFound/404'));
 
-module.exports = Router;
+module.exports = router;

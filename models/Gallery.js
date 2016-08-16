@@ -1,5 +1,5 @@
-module.exports = function(sequelize, DataTypes) {
-  var Gallery = sequelize.define("Gallery", {
+module.exports = (sequelize, DataTypes) => {
+  const Gallery = sequelize.define('Gallery', {
     author: DataTypes.STRING,
     link: DataTypes.STRING,
     description: DataTypes.STRING,

@@ -1,7 +1,7 @@
 module.exports = function verification(req, res, next) {
-  var body = req.body;
-  var supportedFileTypes = ['.tif', '.jpg', '.png', '.jpeg', '.gif'],
-    fileType;
+  const body = req.body;
+  const supportedFileTypes = ['.tif', '.jpg', '.png', '.jpeg', '.gif'];
+  let fileType;
   if (req.method === 'POST') {
     fileType = body.link.slice(body.link.lastIndexOf('.'), body.link.length);
     if (!body.author || !body.link || !body.description) {
@@ -14,11 +14,9 @@ module.exports = function verification(req, res, next) {
     if (supportedFileTypes.indexOf(fileType) < 0) {
       return res.render('error/error');
     }
-    for (var key in body) {
-      if (!body[key]) {
-        return res.render('error/error');
-      }
+    for (const key in body) {
+      if (!body[key]) return res.render('error/error');
     }
   }
-  next();
+  return next();
 };

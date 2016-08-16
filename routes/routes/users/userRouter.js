@@ -1,74 +1,59 @@
-var express = require('express'),
-  Router = express.Router();
-var bodyParser = require('body-parser');
-var methodOverride = require('method-override');
-var Sequelize = require('sequelize'),
-  sequelize = new Sequelize('sequelizedb', 'sequelizeowner', '123', {
-    host: 'localhost',
-    dialect: 'postgres',
-  });
-var bcrypt = require('bcrypt');
-var db = require('./../../../models'),
-  User = db.User,
-  Gallery = db.Gallery;
-var flash = require('connect-flash');
+const express = require('express');
 
-Router.use(flash());
+const router = express.Router();
 
-Router.get('/logout', (req, res) => {
+const bcrypt = require('bcrypt');
+const db = require('./../../../models');
+const flash = require('connect-flash');
+
+const User = db.User;
+const Gallery = db.Gallery;
+
+router.use(flash());
+
+router.get('/logout', (req, res) => {
   req.logout();
   return res.redirect('/');
 });
-Router.get('/register', (req, res) => {
-  return res.render('register/register');
-});
-Router.post('/register', (req, res) => {
+router.get('/register', (req, res) => res.render('register/register'));
+router.post('/register', (req, res) => {
   bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(req.body.password, salt, (err, hash) => {
+    bcrypt.hash(req.body.password, salt, (error, hash) => {
       User.create({
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          username: req.body.username,
-          password: hash,
-          email: req.body.email,
-          theme: 'light',
-        })
-        .then((result) => {
-          return res.redirect(`/user/${req.body.username}`);
-        })
-        .error(() => {
-          return res.render('error/error');
-        });
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        username: req.body.username,
+        password: hash,
+        email: req.body.email,
+      })
+        .then(() => res.redirect(`/user/${req.body.username}`))
+        .error(() => res.render('error/error'));
     });
   });
 });
-Router.get('/login', (req, res) => {
-  return res.render('login/login', { message: req.flash('error') });
-});
-Router.get('/me', (req, res) => {
-  return res.redirect(`/user/${req.user.username}`);
-});
-Router.get('/:username', (req, res) => {
+router.get('/login', (req, res) => res.render('login/login', { message: req.flash('error') }));
+router.get('/me', (req, res) => res.redirect(`/user/${req.user.username}`));
+router.get('/:username', (req, res) => {
   Gallery.findAll({
-      where: {
-        poster: req.params.username
-      }
-    })
+    where: {
+      poster: req.params.username,
+    },
+  })
     .then((data) => {
-      var user;
-      if(req.user) {
+      let user;
+      if (req.user) {
         user = req.user.username;
       }
-      if(user === req.params.username) {
-        req.params.username = 'Your';
+      if (user === req.params.username) {
+        user = 'Your';
       } else {
-        req.params.username = req.params.username + '\'s';
+        user = `${user}'s`;
       }
       return res.render('profile/profile', {
-        username: req.params.username,
-        posts: data
+        username: user,
+        posts: data,
       });
     });
 });
 
-module.exports = Router;
+module.exports = router;
