@@ -1,3 +1,4 @@
+'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Gallery = sequelize.define('Gallery', {
     author: DataTypes.STRING,

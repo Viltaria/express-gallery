@@ -1,3 +1,4 @@
+'use strict';
 module.exports = function verification(req, res, next) {
   const body = req.body;
   const supportedFileTypes = ['.tif', '.jpg', '.png', '.jpeg', '.gif'];
